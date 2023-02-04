@@ -1,0 +1,10 @@
+{
+  "id": "oengine/platform/theme/none",
+  "name": "oengine-none",
+  "hide": true,
+  "description": "",
+  "author": "nguyen van hau",
+  "namespace": "Theme\\OEngineNone",
+  "layout": "layout",
+  "required_plugins": []
+}

@@ -1,0 +1,51 @@
+{
+  "name": "oengine/platform",
+  "description": "",
+  "license": "MIT",
+  "keywords": [],
+  "homepage": "https://github.com/oengine/platform",
+  "authors": [
+    {
+      "name": "nguyen van hau",
+      "email": "nguyenvanhau.soft@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "oengine/laravel-package": "dev-main",
+    "livewire/livewire": "^2.10",
+    "laravel/framework": "^9"
+  },
+  "require-dev": {},
+  "autoload": {
+    "files": [
+      "heplers/constraint.php",
+      "heplers/platform.php"
+    ],
+    "psr-4": {
+      "OEngine\\Highlight\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {}
+  },
+  "scripts": {
+    "analyse": "vendor/bin/phpstan analyse",
+    "test": "vendor/bin/pest",
+    "test-coverage": "vendor/bin/pest --coverage",
+    "format": "vendor/bin/pint"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "OEngine\\Platform\\PlatformServiceProvider"
+      ],
+      "aliases": {}
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

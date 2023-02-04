@@ -1,0 +1,38 @@
+{
+  "name": "theme/none",
+  "description": "theme none oengine.",
+  "keywords": [],
+  "homepage": "https://github.com/oengine/platform",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Nguyen Van Hau",
+      "email": "nguyenvanhau.soft@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+  },
+  "require-dev": {},
+  "autoload": {
+    "files": [
+      "function.php"
+    ],
+    "psr-4": {
+      "Theme\\None\\Widget\\": "widgets/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+    }
+  },
+  "scripts": {
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
