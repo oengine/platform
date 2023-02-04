@@ -23,7 +23,7 @@
       "helpers/platform.php"
     ],
     "psr-4": {
-      "OEngine\\Highlight\\": "src/"
+      "OEngine\\Platform\\": "src/"
     }
   },
   "autoload-dev": {

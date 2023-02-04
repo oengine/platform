@@ -17,6 +17,6 @@ class Action extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \OEngine\Platform\Support\Core\ActionHook::class;
+        return \OEngine\Platform\Support\Hook\ActionHook::class;
     }
 }

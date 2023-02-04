@@ -19,7 +19,7 @@ class ThemeManager
     private ?DataInfo $data_active;
     public function setTitle($title)
     {
-        $this->setData('page_title', $title);
+        $this->setAsset('page_title', $title);
     }
     public function setModelSeo($model_seo)
     {

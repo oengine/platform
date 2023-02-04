@@ -1,6 +1,6 @@
 <?php
 
-namespace OEngine\Platform\Support\Core;
+namespace OEngine\Platform\Support\Hook;
 
 use OEngine\Platform\Traits\WithHookListener;
 

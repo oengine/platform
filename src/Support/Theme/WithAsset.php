@@ -12,12 +12,12 @@ trait WithAsset
 
     private $arrDataPage = [];
 
-    public function setData($key, $value)
+    public function setAsset($key, $value)
     {
         $this->arrDataPage[$key] = $value;
     }
 
-    public function getData($key, $default = '')
+    public function getAsset($key, $default = '')
     {
         return $this->arrDataPage[$key] ?? $default;
     }

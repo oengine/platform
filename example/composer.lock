@@ -2231,7 +2231,7 @@
             "dist": {
                 "type": "path",
                 "url": "./..",
-                "reference": "ad81f7a8f89a97d6e2d117204120ae6f5d07e405"
+                "reference": "bfc80832df0678c0280389fef9fd77f79a3fe220"
             },
             "require": {
                 "laravel/framework": "^9",
@@ -2253,7 +2253,7 @@
                     "helpers/platform.php"
                 ],
                 "psr-4": {
-                    "OEngine\\Highlight\\": "src/"
+                    "OEngine\\Platform\\": "src/"
                 }
             },
             "autoload-dev": {
