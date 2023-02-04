@@ -59,7 +59,7 @@
     "repositories": {
         "oengine/platform": {
             "type": "path",
-            "url": "./../",
+            "url": "./..",
             "options": {
                 "symlink": true
             }
@@ -73,6 +73,6 @@
             "pestphp/pest-plugin": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }

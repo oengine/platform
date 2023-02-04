@@ -19,8 +19,8 @@
   "require-dev": {},
   "autoload": {
     "files": [
-      "heplers/constraint.php",
-      "heplers/platform.php"
+      "helpers/constraint.php",
+      "helpers/platform.php"
     ],
     "psr-4": {
       "OEngine\\Highlight\\": "src/"
