@@ -4,6 +4,7 @@ namespace OEngine\Platform\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Log;
 use Livewire\Livewire;
 
 class PlatformController extends BaseController
@@ -13,18 +14,23 @@ class PlatformController extends BaseController
         $data = platform_decode($request->get('key'));
         if ($data) {
             try {
-                $component = $data['component'];
-                $params = $data['params'];
-                return [
-                    'html' => Livewire::mount($component, $params)->html()
-                ];
+                $params = isset($data['params']) ? $data['params'] : [];
+                if (isset($data['view']) && $view = $data['view']) {
+                    return [
+                        'html' => view($view, $params)->render()
+                    ];
+                }
+                if (isset($data['component']) && $component = $data['component']) {
+                    return [
+                        'html' => Livewire::mount($component, $params)->html()
+                    ];
+                }
             } catch (\Exception $ex) {
-                printf($ex);
-                return ['html' => '<div>not found' . json_encode($data) . '</div>', 'error' => $ex];
+                return ['html' => '<div>not found</div>', 'data' => $data, 'error' => $ex];
             }
         }
 
-        return ['html' => '<div>not found' . json_encode($data) . '</div>', 'error' => 'not found'];
+        return ['html' => '<div>not found</div>', 'data' => $data, 'error' => 'not found'];
     }
     public function doEvents()
     {

@@ -21,11 +21,11 @@ if (!function_exists('platform_encode')) {
 if (!function_exists('platform_decode')) {
     function platform_decode($data)
     {
-        return  json_decode(urldecode(base64_decode($data)));
+        return  json_decode(urldecode(base64_decode($data)),true);
     }
 }
 if (!function_exists('platform_component')) {
-    function platform_component($component, $params=[])
+    function platform_component($component, $params = [])
     {
         return platform_encode([
             'component' => $component,
@@ -33,8 +33,17 @@ if (!function_exists('platform_component')) {
         ]);
     }
 }
+if (!function_exists('platform_view')) {
+    function platform_view($view, $params = [])
+    {
+        return platform_encode([
+            'view' => $view,
+            'params' => $params
+        ]);
+    }
+}
 if (!function_exists('platform_action')) {
-    function platform_action($action, $params=[])
+    function platform_action($action, $params = [])
     {
         return platform_encode([
             'action' => $action,
