@@ -22,7 +22,7 @@ trait WithAsset
         return $this->arrDataPage[$key] ?? $default;
     }
 
-    public function AddScript($local, $contentOrPath, $cdn = '', $priority = 20, $isLink = true)
+    public function addScript($local, $contentOrPath, $cdn = '', $priority = 20, $isLink = true)
     {
         if (!isset($this->arrScript[$local])) {
             $this->arrScript[$local] = [];
@@ -33,7 +33,7 @@ trait WithAsset
         $this->arrScript[$local][$priority] = compact('contentOrPath', 'cdn', 'isLink');
     }
 
-    public function AddStyle($local, $contentOrPath, $cdn = '', $priority = 20, $isLink = true)
+    public function addStyle($local, $contentOrPath, $cdn = '', $priority = 20, $isLink = true)
     {
         if (!isset($this->arrStyle[$local])) {
             $this->arrStyle[$local] = [];
@@ -46,6 +46,7 @@ trait WithAsset
 
     public function loadAsset($local)
     {
+        ob_start();
         // Style
         if (isset($this->arrStyle[$local]) && count($this->arrStyle[$local]) > 0) {
             $styles = $this->arrStyle[$local];
@@ -90,5 +91,6 @@ trait WithAsset
         }
         if (isset($this->arrScript[$local])) {
         }
+        return ob_get_clean();
     }
 }

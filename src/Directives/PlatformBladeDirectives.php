@@ -27,7 +27,7 @@ class PlatformBladeDirectives
     }
     public static function PlatformHead($expression)
     {
-        $expression = Str::lower($expression);
+        $expression = Str::upper($expression);
         return <<<EOT
         <?php
             do_action('PLATFORM_HEAD_{$expression}');
@@ -37,7 +37,7 @@ class PlatformBladeDirectives
 
     public static function PlatformBody($expression)
     {
-        $expression = Str::lower($expression);
+        $expression = Str::upper($expression);
         return <<<EOT
         <?php
         do_action('PLATFORM_BODY_{$expression}');

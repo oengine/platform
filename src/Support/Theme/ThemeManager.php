@@ -24,7 +24,7 @@ class ThemeManager
     }
     public function getTitle()
     {
-        return $this->getAsset('page_title');
+        return apply_filters(PLATFORM_PAGE_TITLE, $this->getAsset('page_title'));
     }
     public function setModelSeo($model_seo)
     {

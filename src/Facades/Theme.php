@@ -25,7 +25,14 @@ use Illuminate\Support\Facades\Facade;
  * @method static void forgetUsed()
  * @method static void setUsed(string $name)
  * @method static void update(string $name)
- *
+ * @method static void setAsset($key, $value)
+ * @method static mix getAsset($key, $default = '')
+ * @method static void addScript($local, $contentOrPath, $cdn = '', $priority = 20, $isLink = true)
+ * @method static void addStyle($local, $contentOrPath, $cdn = '', $priority = 20, $isLink = true)
+ * @method static string loadAsset($local)
+ * @method static void getHeaderInfo()
+ * @method static string getTitle()
+ * @method static void setTitle($title)
  * @see \OEngine\Platform\Facades\Theme
  */
 class Theme extends Facade

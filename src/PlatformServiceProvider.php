@@ -42,9 +42,6 @@ class PlatformServiceProvider extends ServiceProvider
 
     public function packageBooted()
     {
-        if (!$this->app->runningInConsole()) {
-            $this->registerBladeDirectives();
-        }
         Module::BootApp();
     }
     public function bootingPackage()
@@ -54,7 +51,25 @@ class PlatformServiceProvider extends ServiceProvider
 
     public function packageRegistered()
     {
-
+        $this->registerBladeDirectives();
+        add_action(PLATFORM_HEAD_BEFORE, function () {
+            echo Theme::getHeaderInfo();
+        });
+        add_action(PLATFORM_HEAD_AFTER, function () {
+            if (class_exists(\Livewire\Livewire::class))
+                echo \Livewire\Livewire::styles();
+            echo Theme::loadAsset('head');
+        });
+        add_action(PLATFORM_BODY_AFTER, function () {
+            if (class_exists(\Livewire\Livewire::class))
+                echo \Livewire\Livewire::scripts();
+            echo Theme::loadAsset('body');
+            echo "
+            <script type='text/javascript'>
+                ModulePlatform.\$config=" . json_encode(apply_filters(PLATFORM_CONFIG_JS, ['url' => url(''), 'platform_url' => route('__platform__'), 'csrf_token' => csrf_token()])) . ";
+            </script>
+            ";
+        });
         Theme::LoadApp();
         Module::LoadApp();
     }

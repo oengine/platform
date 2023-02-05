@@ -1,23 +1,28 @@
 import { PlatformUtil } from "./utils/platform.util";
 
 export class ModulePlatform {
+  $config = {};
   $module = {};
   $loaded = false;
   $utils = PlatformUtil;
+  getUrl($url) {
+    return this.$config["platform_url"] + "/" + $url;
+  }
   register(name, $_module) {
-    this.$module[name] = $_module;
-    if (this.$loaded && this.$module[name]) {
-      this.$module[name].manager = this;
+    const self = this;
+    self.$module[name] = $_module;
+    if (self.$loaded && self.$module[name]) {
+      self.$module[name].manager = self;
       try {
-        if (this.$module[name].init) {
-          this.$module[name].init();
+        if (self.$module[name].init) {
+          self.$module[name].init();
         }
       } catch (ex) {
         console.log("init", name, ex);
       }
       try {
-        if (this.$module[name].loading) {
-          this.$module[name].loading();
+        if (self.$module[name].loading) {
+          self.$module[name].loading();
         }
       } catch (ex) {
         console.log("loading", name, ex);
@@ -28,11 +33,12 @@ export class ModulePlatform {
     return this.$module[$name];
   }
   init() {
-    Object.keys(this.$module).forEach((name) => {
-      this.$module[name].manager = this;
+    const self = this;
+    Object.keys(self.$module).forEach((name) => {
+      self.$module[name].manager = self;
       try {
-        if (this.$module[name].init) {
-          this.$module[name].init();
+        if (self.$module[name].init) {
+          self.$module[name].init();
         }
       } catch (ex) {
         console.log("init", name, ex);
@@ -41,40 +47,43 @@ export class ModulePlatform {
     return this;
   }
   loading() {
-    Object.keys(this.$module).forEach((name) => {
+    const self = this;
+    Object.keys(self.$module).forEach((name) => {
       setTimeout(() => {
         try {
-          if (this.$module[name].loading) {
-            this.$module[name].loading();
+          if (self.$module[name].loading) {
+            self.$module[name].loading();
           }
         } catch (ex) {
           console.log("loading", name, ex);
         }
       });
     });
-    this.loaded = true;
+    self.$loaded = true;
   }
   uninit() {
-    Object.keys(this.$module).forEach((name) => {
+    const self = this;
+    Object.keys(self.$module).forEach((name) => {
       setTimeout(() => {
         try {
-          if (this.$module[name].uninit) {
-            this.$module[name].uninit();
+          if (self.$module[name].uninit) {
+            self.$module[name].uninit();
           }
         } catch (ex) {
           console.log("uninit", name, ex);
         }
       });
     });
-    this.loaded = true;
+    self.$loaded = true;
   }
   restart() {
     this.uninit();
     this.start();
   }
   start() {
+    const self = this;
     window.addEventListener("DOMContentLoaded", function () {
-      this.init().loading();
+      self.init().loading();
     });
   }
 }

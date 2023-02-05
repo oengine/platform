@@ -77,7 +77,7 @@ class ModuleLinkCommand extends Command
                     $this->laravel->make('files')->relativeLink($source, $target);
                     $this->components->info("The [$target] relativeLink has been connected to [$source].");
                 } else {
-                    $this->laravel->make('files')->target($source, $target);
+                    $this->laravel->make('files')->link($source, $target);
                     $this->components->info("The [$target] target has been connected to [$source].");
                 }
             } catch (\Exception $e) {

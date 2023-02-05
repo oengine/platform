@@ -8,7 +8,40 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use OEngine\Platform\Facades\Action;
 use OEngine\Platform\Facades\Filter;
+use OEngine\Platform\Facades\Theme;
 use OEngine\Platform\Models\Option;
+
+
+if (!function_exists('platform_encode')) {
+    function platform_encode($data)
+    {
+        return base64_encode(urlencode(json_encode($data ?? [])));
+    }
+}
+if (!function_exists('platform_decode')) {
+    function platform_decode($data)
+    {
+        return  json_decode(urldecode(base64_decode($data)));
+    }
+}
+if (!function_exists('platform_component')) {
+    function platform_component($component, $params=[])
+    {
+        return platform_encode([
+            'component' => $component,
+            'params' => $params
+        ]);
+    }
+}
+if (!function_exists('platform_action')) {
+    function platform_action($action, $params=[])
+    {
+        return platform_encode([
+            'action' => $action,
+            'params' => $params
+        ]);
+    }
+}
 
 if (!function_exists('add_action')) {
     /**
@@ -237,6 +270,13 @@ if (!function_exists('adminUrl')) {
         return  apply_filters(PLATFORM_URL_ADMIN, "");
     }
 }
+if (!function_exists('page_title')) {
+    function page_title()
+    {
+        return  apply_filters(PLATFORM_URL_ADMIN, Theme::getTitle());
+    }
+}
+
 
 if (!function_exists('set_option')) {
     function set_option($key, $value = null, $locked = null)
