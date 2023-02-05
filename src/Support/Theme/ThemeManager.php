@@ -4,6 +4,7 @@ namespace OEngine\Platform\Support\Theme;
 
 use OEngine\Core\Facades\Core;
 use OEngine\Platform\DataInfo;
+use OEngine\Platform\Facades\Module;
 use OEngine\Platform\Traits\WithSystemExtend;
 
 class ThemeManager
@@ -20,6 +21,10 @@ class ThemeManager
     public function setTitle($title)
     {
         $this->setAsset('page_title', $title);
+    }
+    public function getTitle()
+    {
+        return $this->getAsset('page_title');
     }
     public function setModelSeo($model_seo)
     {
@@ -45,15 +50,17 @@ class ThemeManager
     {
         $this->layout = 'theme::' . $layout;
     }
-    public function findAndActive($theme)
+    public function findAndActive($theme, $link = false)
     {
         $theme_data = $this->find($theme);
         if ($theme_data == null) return null;
         if ($parent = $theme_data['parent']) {
-            $this->findAndActive($parent);
+            $this->findAndActive($parent, $link);
         }
         $theme_data->DoRegister('theme');
-
+        if ($link) {
+            Module::addLink($theme_data->getPath('public'), $theme_data->getPublic());
+        }
         return $theme_data;
     }
 
@@ -78,7 +85,7 @@ class ThemeManager
     {
         if (!isset($this->data_active) || !$this->data_active) {
 
-            if (Request()->route()->getPrefix() === Core::adminPrefix()) {
+            if (Request()->route()->getPrefix() === adminUrl()) {
                 $this->data_active = $this->findAndActive(apply_filters("filter_theme_layout", get_option('page_admin_theme', 'oengine-admin')));
             } else {
                 $this->data_active = $this->findAndActive(apply_filters("filter_theme_layout", get_option('page_site_theme', 'oengine-none')));

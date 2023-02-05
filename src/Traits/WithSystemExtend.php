@@ -65,7 +65,7 @@ trait WithSystemExtend
     /**
      * Get the data.
      *
-     * @return \Illuminate\Support\Collection<string, \OEngine\Core\Support\Core\DataInfo>
+     * @return \Illuminate\Support\Collection<string, \OEngine\Platform\DataInfo>
      */
     public function getData()
     {

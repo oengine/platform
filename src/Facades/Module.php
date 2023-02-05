@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static void forgetUsed()
  * @method static void setUsed(string $name)
  * @method static void update(string $name)
+ * @method static void addLink(string $source,string $target, bool $relative = false)
+ * @method static mix getLinks()
  *
  * @see \OEngine\Platform\Facades\Module
  */

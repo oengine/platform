@@ -11,4 +11,17 @@ class ModuleManager
     {
         return "module";
     }
+    private $arrLink = [];
+    public function addLink($source, $target, $relative = false)
+    {
+        $this->arrLink[$source . $target] = [
+            'source' => $source,
+            'target' => $target,
+            'relative' => $relative
+        ];
+    }
+    public function getLinks()
+    {
+        return $this->arrLink;
+    }
 }

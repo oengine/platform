@@ -74,7 +74,7 @@ class DataInfo extends JsonData
     }
     public function isVendor()
     {
-        return !str_starts_with($this->getPath(), config('core.appdir.root', 'GateApp'));
+        return !str_starts_with($this->getPath(), config('platform.appdir.root', 'platform'));
     }
     public function setStatusData($value)
     {
@@ -106,8 +106,9 @@ class DataInfo extends JsonData
     }
     public function Dump()
     {
-        chdir($this->getPath());
-        passthru('composer dump -o -n -q');
+        run_cmd($this->getPath(), 'composer dump -o -n -q');
+        // chdir($this->getPath());
+        // passthru('composer dump -o -n -q');
     }
     public function update()
     {

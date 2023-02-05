@@ -1,7 +1,9 @@
 <?php
 
+use OEngine\Platform\Commands\ModuleLinkCommand;
+
 return [
-    'platform' => [
+    'appdir' => [
         'root' =>  env('PLATFORM_ROOT', 'platform'),
         'theme' => env('PLATFORM_THEME', 'themes'),
         'module' => env('PLATFORM_MODULE', 'modules'),
@@ -10,5 +12,8 @@ return [
         'user' => OEngine\Platform\Models\User::class,
         'role' => OEngine\Platform\Models\Role::class,
         'permission' => OEngine\Platform\Models\Permission::class,
+    ],
+    'commands'=>[
+        ModuleLinkCommand::class
     ]
 ];

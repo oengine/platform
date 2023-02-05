@@ -15,4 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'platform'], function () {
     Route::post('/livewire/component', [OEngine\Platform\Http\Controllers\PlatformController::class, 'LivewireComponent']);
     Route::post('/events', [OEngine\Platform\Http\Controllers\PlatformController::class, 'doEvents']);
+    Route::get('/hello',function(){
+        return 'hello, now is '.now();
+    });
 });
