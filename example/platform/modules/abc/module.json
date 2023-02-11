@@ -1,0 +1,14 @@
+{
+    "name": "Abc",
+    "alias": "abc",
+    "description": "",
+    "keywords": [],
+    "priority": 100,
+    "namespace":"Platform\\Modules\\Abc",
+    "providers": [
+        "Platform\\Modules\\Abc\\AbcServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

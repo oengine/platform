@@ -1,0 +1,12 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use OEngine\Core\Support\Core\ActionBase;
+
+class $CLASS$ extends ActionBase
+{
+    public function DoAction()
+    {
+    }
+}

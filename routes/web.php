@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'platform'], function () {
-    Route::post('/livewire/component', [OEngine\Platform\Http\Controllers\PlatformController::class, 'LivewireComponent']);
+    Route::post('/component', [OEngine\Platform\Http\Controllers\PlatformController::class, 'getComponent']);
     Route::post('/events', [OEngine\Platform\Http\Controllers\PlatformController::class, 'doEvents']);
-    Route::get('/',function(){
-        return 'hello, now is '.now();
+    Route::post('/webhook', [OEngine\Platform\Http\Controllers\PlatformController::class, 'doWebhooks']);
+    Route::get('/', function () {
+        return 'hello, now is ' . now();
     })->name('__platform__');
 });

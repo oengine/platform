@@ -37,7 +37,7 @@ class ThemeManager
     public function getHeaderInfo()
     {
         if (function_exists('seo') && $this->data_active && !$this->data_active->admin) {
-            echo  seo($this->getModelSeo());
+            echo seo($this->getModelSeo());
         } else {
             echo "<title>" . page_title() . "</title>";
         }

@@ -7,7 +7,7 @@ export const PlatformUtil = {
     }
 
     return (
-      window.livewire_token ?? undefined ?? ModulePlatform.$config["csrf_token"]
+      window.livewire_token ?? ModulePlatform.$config["csrf_token"]
     );
   },
   request(url, option = {}) {

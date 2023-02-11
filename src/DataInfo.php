@@ -38,7 +38,6 @@ class DataInfo extends JsonData
         return $this[$key] == $value;
     }
 
-
     public function getPath($_path = '')
     {
         return $this->path . ($_path ? ('/' . $_path) : '');
@@ -56,9 +55,9 @@ class DataInfo extends JsonData
     {
         return $this['providers'] ?? [];
     }
-    public function getKey()
+    public function getId()
     {
-        return $this['key'];
+        return $this['id'];
     }
     public function getName()
     {
@@ -66,35 +65,43 @@ class DataInfo extends JsonData
     }
     protected function getKeyOption($key)
     {
-        return trim(Str::lower("option_datainfo_" . $this['base_type'] . '_' . $this->getKey() . '_' . $key . '_value'));
+        return trim(Str::lower("option_datainfo_" . $this['base_type'] . '_' . $this->getId() . '_' . $key . '_value'));
+    }
+    public function getOption($key, $default = null)
+    {
+        return  get_option($this->getKeyOption($key), $default);
+    }
+    public function setOption($key, $value)
+    {
+        return set_option($this->getKeyOption($key), $value);
     }
     public function getStatusData()
     {
-        return get_option($this->getKeyOption('status'));
+        return $this->getOption('status');
     }
-    public function isVendor()
-    {
-        return !str_starts_with($this->getPath(), config('platform.appdir.root', 'platform'));
-    }
+
     public function setStatusData($value)
     {
         if ($value == self::Active && !$this->checkDump()) {
             $this->Dump();
         }
-        $flg = set_option($this->getKeyOption('status'), $value);
-        return $flg;
+        $this->setOption('status', $value);
+    }
+    public function isVendor()
+    {
+        return !str_starts_with($this->getPath(), config('platform.appdir.root', 'platform'));
     }
     public function isActive()
     {
-        return $this['status'] == self::Active;
+        return $this->status == self::Active;
     }
     public function Active()
     {
-        $this['status'] = self::Active;
+        $this->status = self::Active;
     }
     public function UnActive()
     {
-        $this['status'] = self::UnActive;
+        $this->status = self::UnActive;
     }
     public function checkComposer()
     {
@@ -107,15 +114,13 @@ class DataInfo extends JsonData
     public function Dump()
     {
         run_cmd($this->getPath(), 'composer dump -o -n -q');
-        // chdir($this->getPath());
-        // passthru('composer dump -o -n -q');
     }
     public function update()
     {
     }
     public function CheckName($name)
     {
-        return Str::lower($this->getKey())  ==  Str::lower($name) || Str::lower($this->name) == Str::lower($name);
+        return Str::lower($this->getId())  ==  Str::lower($name) || Str::lower($this->name) == Str::lower($name);
     }
     public function getStudlyName()
     {

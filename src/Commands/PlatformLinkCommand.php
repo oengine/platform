@@ -8,9 +8,9 @@ use OEngine\Platform\Facades\Module;
 use OEngine\Platform\Facades\Theme;
 use Symfony\Component\Console\Input\InputOption;
 
-class ModuleLinkCommand extends Command
+class PlatformLinkCommand extends Command
 {
-    protected $name = 'module:link';
+    protected $name = 'platform:link';
 
 
     /**
@@ -55,7 +55,6 @@ class ModuleLinkCommand extends Command
         Theme::findAndActive('oengine-none', true);
         Theme::findAndActive(get_option('page_site_theme'), true);
         Theme::findAndActive(get_option('page_admin_theme'), true);
-        Log::info(Module::getLinks());
         foreach (Module::getLinks() as  [
             'source' => $source,
             'target' => $target

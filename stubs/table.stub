@@ -1,0 +1,35 @@
+<?php
+use OEngine\Core\Facades\GateConfig;
+use OEngine\Core\Http\Action\Test;
+use OEngine\Core\Livewire\Modal;
+use OEngine\Core\Support\Config\ButtonConfig;
+
+return GateConfig::NewItem()
+    ->setModel($NAMESPACE_MODEL$\$CLASS$::class)
+    ->setButtonAppend([
+        GateConfig::Button('$LOWER_NAME$::tables.$LOWER_CLASS$.button.button1')
+            ->setIcon('<i class="bi bi-magic"></i>')
+            ->setPermission('$LOWER_NAME$.$LOWER_CLASS$.button.button1')
+            ->setDoAction(Test::class)
+            ->setType(ButtonConfig::TYPE_ADD),
+        GateConfig::Button('$LOWER_NAME$::tables.$LOWER_CLASS$.button.button2')
+            ->setIcon('<i class="bi bi-magic"></i>')
+            ->setClass('btn btn-primary btn-sm')
+            ->setPermission('$LOWER_NAME$.$LOWER_CLASS$.button.button2')
+            ->setDoComponent('$LOWER_NAME$::$LOWER_CLASS$.page.index', function ($id) {
+                return "{'dataId':" . $id . "}";
+            })
+            ->setType(ButtonConfig::TYPE_UPDATE)
+    ])
+    ->setForm(GateConfig::Form()->setSize(Modal::ExtraLarge))
+    ->setFields([
+        GateConfig::Field('group')
+            ->setType(FieldBuilder::Text)
+            ->setTitle('$LOWER_NAME$::tables.$LOWER_CLASS$.field.group'),
+        GateConfig::Field('slug')
+            ->setType(FieldBuilder::Text)
+            ->setTitle('$LOWER_NAME$::tables.$LOWER_CLASS$.field.slug'),
+        GateConfig::Field('name')
+            ->setType(FieldBuilder::Textarea)
+            ->setTitle('$LOWER_NAME$::tables.$LOWER_CLASS$.field.name')
+    ]);

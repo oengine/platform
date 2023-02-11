@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use OEngine\LaravelPackage\WithServiceProvider as WithServiceProviderBase;
 use OEngine\Platform\Facades\Module;
+use OEngine\Platform\Facades\Plugin;
 use OEngine\Platform\Facades\Theme;
 use OEngine\Platform\Livewire\LivewireLoader;
 
@@ -20,6 +21,7 @@ trait WithServiceProvider
         $this->ExtendPackage();
         $this->registerBase();
         Theme::Load($this->package->basePath('/../themes'));
+        Plugin::Load($this->package->basePath('/../plugins'));
         if (File::exists($this->package->basePath('/../public'))) {
             Module::addLink($this->package->basePath('/../public'), public_path('modules/' . $this->package->shortName()));
             Theme::addScript('body', 'modules/' . $this->package->shortName() . '/js/app.js');

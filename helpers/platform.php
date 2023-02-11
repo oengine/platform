@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use OEngine\Platform\Facades\Action;
 use OEngine\Platform\Facades\Filter;
+use OEngine\Platform\Facades\Module;
+use OEngine\Platform\Facades\Plugin;
 use OEngine\Platform\Facades\Theme;
 use OEngine\Platform\Models\Option;
 
@@ -21,7 +23,7 @@ if (!function_exists('platform_encode')) {
 if (!function_exists('platform_decode')) {
     function platform_decode($data)
     {
-        return  json_decode(urldecode(base64_decode($data)),true);
+        return  json_decode(urldecode(base64_decode($data)), true);
     }
 }
 if (!function_exists('platform_component')) {
@@ -49,6 +51,18 @@ if (!function_exists('platform_action')) {
             'action' => $action,
             'params' => $params
         ]);
+    }
+}
+
+if (!function_exists('platform_by')) {
+    function platform_by($type)
+    {
+        if ($type == 'module')
+            return Module::getFacadeRoot();
+        if ($type == 'plugin')
+            return Plugin::getFacadeRoot();
+        if ($type == 'theme')
+            return Theme::getFacadeRoot();
     }
 }
 

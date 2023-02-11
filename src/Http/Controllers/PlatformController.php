@@ -4,35 +4,37 @@ namespace OEngine\Platform\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Log;
-use Livewire\Livewire;
+
 
 class PlatformController extends BaseController
 {
-    public function LivewireComponent(Request $request)
+    public function getComponent(Request $request)
     {
         $data = platform_decode($request->get('key'));
+        $dataParams = [];
+        $data = apply_filters(PLATFORM_DO_COMPONENT, $dataParams);
+        if ($data !== $dataParams) return $data;
         if ($data) {
             try {
                 $params = isset($data['params']) ? $data['params'] : [];
                 if (isset($data['view']) && $view = $data['view']) {
                     return [
-                        'html' => view($view, $params)->render()
-                    ];
-                }
-                if (isset($data['component']) && $component = $data['component']) {
-                    return [
-                        'html' => Livewire::mount($component, $params)->html()
+                        'html' => view($view, $params)->render(),
+                        'error_code' => 0,
                     ];
                 }
             } catch (\Exception $ex) {
-                return ['html' => '<div>not found</div>', 'data' => $data, 'error' => $ex];
+                return ['html' => '<div>not found</div>', 'data' => $data, 'error' => $ex, 'error_code' => 500];
             }
         }
-
-        return ['html' => '<div>not found</div>', 'data' => $data, 'error' => 'not found'];
+        return ['html' => '<div>not found</div>', 'data' => $data, 'error' => 'not found', 'error_code' => 404];
     }
-    public function doEvents()
+    public function doEvents(Request $request)
     {
+        return  apply_filters(PLATFORM_DO_EVENT, ['request' => $request]);
+    }
+    public function doWebhooks(Request $request)
+    {
+        return  apply_filters(PLATFORM_DO_WEBHOOK, ['request' => $request]);
     }
 }

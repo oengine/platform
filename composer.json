@@ -12,9 +12,7 @@
     }
   ],
   "require": {
-    "oengine/laravel-package": "dev-main",
-    "livewire/livewire": "^2.10",
-    "laravel/framework": "^9"
+    "oengine/laravel-package": "dev-main"
   },
   "require-dev": {},
   "autoload": {

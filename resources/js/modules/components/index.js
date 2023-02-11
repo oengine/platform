@@ -2,8 +2,7 @@ export class PlatformComponent {
   manager = undefined;
   triggerEventComponent(el) {
     const self = this;
-    el.querySelectorAll("[wire\\:component]")?.forEach((elItem) => {
-      console.log(elItem);
+    el.querySelectorAll("platform\\:component]")?.forEach((elItem) => {
       elItem.removeEventListener(
         "click",
         self.clickEventComponent.bind(self),
@@ -11,14 +10,12 @@ export class PlatformComponent {
       );
       elItem.addEventListener("click", self.clickEventComponent.bind(self));
     });
-    if (el.classList.contains("modal")) {
-    }
   }
   openComponent(key, toEl) {
     const self = this;
     if (!toEl) toEl = document.body;
     this.manager.$utils
-      .request(self.manager.getUrl("livewire/component"), {
+      .request(self.manager.getUrl("component"), {
         method: "post",
         body: JSON.stringify({
           key: key,
@@ -29,33 +26,41 @@ export class PlatformComponent {
           let data = await response.json();
           let el = self.manager.$utils.htmlToElement(data.html);
           toEl.appendChild(el);
-          window.livewire?.rescan();
+          window?.livewire?.rescan();
           self.triggerEventComponent(el);
-          window.dispatchEvent(
-            new CustomEvent("openComponent", { detail: el })
-          );
+          window.dispatchEvent(new CustomEvent("platform::component", el));
         } else {
-          console.log(response);
+          window.dispatchEvent(
+            new CustomEvent("platform::error", { response })
+          );
         }
       });
   }
   clickEventComponent(e) {
+    const self = this;
     let elComponent = e.currentTarget;
-    let strComponent = elComponent.getAttribute("wire:component");
+    let strComponent = elComponent.getAttribute("platform:component");
     let targetTo = elComponent.getAttribute("component:target");
     if (targetTo) {
       try {
         targetTo = document.querySelector(targetTo);
-      } catch {}
+      } catch {
+        targetTo = undefined;
+      }
     }
     if (!targetTo) {
       targetTo = document.body;
     }
     this.openComponent(strComponent, targetTo);
   }
-  init() {}
+  init() {
+    window?.addEventListener("platform::component", (el) => {
+      self.triggerEventComponent(el);
+    });
+  }
   loading() {
-    this.triggerEventComponent(document.body);
+    const self = this;
+    self.triggerEventComponent(document.body);
   }
   unint() {}
 }

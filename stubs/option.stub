@@ -1,0 +1,13 @@
+<?php
+
+use OEngine\Core\Builder\Form\FieldBuilder;
+use OEngine\Core\Facades\GateConfig;
+
+return GateConfig::Option('$CLASS$')->Disable()->setSort(1)->setFields([
+     GateConfig::Field('$CLASS_FILE$_param')
+        ->setType(FieldBuilder::Text)
+        ->setTitle('$LOWER_NAME$ Param'),
+     GateConfig::Field('$CLASS_FILE$_param1')
+        ->setType(FieldBuilder::Quill)
+        ->setTitle('$LOWER_NAME$ Param1'),
+]);
