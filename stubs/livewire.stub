@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$;
 
-use OEngine\Core\Livewire\Component;
+use OEngine\Platform\Livewire\Component;
 
 class $CLASS$ extends Component
 {
