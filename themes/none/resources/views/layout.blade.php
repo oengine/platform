@@ -6,7 +6,7 @@
     @platformHead(after)
 </head>
 
-<body>
+<body class="{{ theme_class() }}">
     @platformBody(before)
     @yield('content')
     @platformBody(after)

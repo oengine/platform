@@ -1,4 +1,12 @@
 <!doctype html>
-<livewireg:oengine-layout>
+<html>
+<head>
+    @platformHead(before)
+    @platformHead(after)
+</head>
+<body class="{{theme_class()}}">
+    @platformBody(before)
     @yield('content')
-</livewireg:oengine-layout>
+    @platformBody(after)
+</body>
+</html>

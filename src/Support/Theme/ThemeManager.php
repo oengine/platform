@@ -2,7 +2,6 @@
 
 namespace OEngine\Platform\Support\Theme;
 
-use OEngine\Core\Facades\Core;
 use OEngine\Platform\DataInfo;
 use OEngine\Platform\Facades\Module;
 use OEngine\Platform\Traits\WithSystemExtend;
@@ -79,16 +78,15 @@ class ThemeManager
         } else {
             set_option('page_site_theme', $theme->getKey());
         }
-        Core::reModuleLink();
     }
     public function Layout($layout = '')
     {
         if (!isset($this->data_active) || !$this->data_active) {
 
             if (Request()->route()->getPrefix() === adminUrl()) {
-                $this->data_active = $this->findAndActive(apply_filters("filter_theme_layout", get_option('page_admin_theme', 'oengine-admin'),1));
+                $this->data_active = $this->findAndActive(apply_filters("filter_theme_layout", get_option('page_admin_theme', 'oengine-admin'), 1));
             } else {
-                $this->data_active = $this->findAndActive(apply_filters("filter_theme_layout", get_option('page_site_theme', 'oengine-none'),0));
+                $this->data_active = $this->findAndActive(apply_filters("filter_theme_layout", get_option('page_site_theme', 'oengine-none'), 0));
             }
             if ($this->data_active == null) {
                 $this->data_active = $this->findAndActive('oengine-none');

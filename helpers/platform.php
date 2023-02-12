@@ -164,6 +164,15 @@ if (!function_exists('theme_layout')) {
         return apply_filters(PLATFORM_THEME_LAYOUT, 'none');
     }
 }
+if (!function_exists('theme_class')) {
+    /**
+     * @param  string 
+     */
+    function theme_class($default = '')
+    {
+        return apply_filters(PLATFORM_THEME_CLASS, $default);
+    }
+}
 if (!function_exists('path_by')) {
     /**
      * @param  string 

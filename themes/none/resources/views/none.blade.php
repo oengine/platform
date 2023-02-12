@@ -1,8 +1,12 @@
 <!doctype html>
 <html>
-    <head>
-    </head>
-    <body>
-        @yield('content')
-    </body>
+<head>
+    @platformHead(before)
+    @platformHead(after)
+</head>
+<body class="{{theme_class()}}">
+    @platformBody(before)
+    @yield('content')
+    @platformBody(after)
+</body>
 </html>
