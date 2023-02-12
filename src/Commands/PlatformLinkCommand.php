@@ -53,8 +53,8 @@ class PlatformLinkCommand extends Command
         $force = $this->option('force') || true;
         $relative = $this->option('relative') || false;
         Theme::findAndActive('oengine-none', true);
-        Theme::findAndActive(get_option('page_site_theme'), true);
-        Theme::findAndActive(get_option('page_admin_theme'), true);
+        Theme::findAndActive(get_option(PLATFORM_THEME_ADMIN), true);
+        Theme::findAndActive(get_option(PLATFORM_THEME_WEB), true);
         foreach (Module::getLinks() as  [
             'source' => $source,
             'target' => $target
@@ -82,7 +82,7 @@ class PlatformLinkCommand extends Command
             } catch (\Exception $e) {
             }
         }
-        $this->call('storage:target');
+        $this->call('storage:link');
 
         return 0;
     }

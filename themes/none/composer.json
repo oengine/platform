@@ -11,28 +11,22 @@
       "role": "Developer"
     }
   ],
-  "require": {
-  },
+  "require": {},
   "require-dev": {},
   "autoload": {
-    "files": [
-      "function.php"
-    ],
+    "files": [],
     "psr-4": {
       "Theme\\None\\Widget\\": "widgets/"
     }
   },
   "autoload-dev": {
-    "psr-4": {
-    }
+    "psr-4": {}
   },
-  "scripts": {
-  },
+  "scripts": {},
   "config": {
     "sort-packages": true
   },
-  "extra": {
-  },
+  "extra": {},
   "minimum-stability": "dev",
   "prefer-stable": true
 }

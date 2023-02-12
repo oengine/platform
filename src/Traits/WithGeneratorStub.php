@@ -10,6 +10,7 @@ use OEngine\LaravelPackage\JsonData;
 
 trait WithGeneratorStub
 {
+    public $force = false;
     /**
      * The laravel filesystem instance.
      *
@@ -324,7 +325,7 @@ trait WithGeneratorStub
      */
     protected function getVendorReplacement()
     {
-        return config('generator.composer.vendor');
+        return config('platform.composer.vendor');
     }
     /**
      * Get replacement for $AUTHOR_NAME$.
@@ -333,7 +334,7 @@ trait WithGeneratorStub
      */
     protected function getAuthorNameReplacement()
     {
-        return config('generator.composer.author.name');
+        return config('platform.composer.author.name');
     }
     /**
      * Get replacement for $AUTHOR_EMAIL$.
@@ -342,7 +343,7 @@ trait WithGeneratorStub
      */
     protected function getAuthorEmailReplacement()
     {
-        return config('generator.composer.author.email');
+        return config('platform.composer.author.email');
     }
     /**
      * Get replacement for $CLASS$.
@@ -370,6 +371,15 @@ trait WithGeneratorStub
     protected function getQuoteReplacement()
     {
         return Inspiring::quotes()->random();
+    }
+    /**
+     * Get replacement for $JSON_ID$.
+     *
+     * @return string
+     */
+    protected function getJsonIdReplacement()
+    {
+        return Str::uuid() . rand(10000, 10000000);
     }
 
     //------------------END  : Replacement------------------------------

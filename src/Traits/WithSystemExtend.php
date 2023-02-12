@@ -3,7 +3,9 @@
 namespace OEngine\Platform\Traits;
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use OEngine\Platform\DataInfo;
+use OEngine\Platform\Facades\Platform;
 
 trait WithSystemExtend
 {
@@ -90,9 +92,9 @@ trait WithSystemExtend
     public function delete($name)
     {
         $base = $this->find($name);
-        // if ($base) {
-        //     $base->delete();
-        // }
+        if ($base) {
+            $base->delete();
+        }
     }
     public function Load($path)
     {

@@ -4,6 +4,7 @@ namespace OEngine\Platform\Support\Theme;
 
 use OEngine\Platform\DataInfo;
 use OEngine\Platform\Facades\Module;
+use OEngine\Platform\Facades\Platform;
 use OEngine\Platform\Traits\WithSystemExtend;
 
 class ThemeManager
@@ -66,17 +67,17 @@ class ThemeManager
     public function getStatusData($theme)
     {
         if (isset($theme['admin']) && $theme['admin'] == 1) {
-            return get_option(PLATFORM_THEME_ADMIN) == $theme->getKey() ? 1 : 0;
+            return get_option(PLATFORM_THEME_ADMIN) == $theme->getId() ? 1 : 0;
         } else {
-            return get_option(PLATFORM_THEME_WEB) == $theme->getKey() ? 1 : 0;
+            return get_option(PLATFORM_THEME_WEB) == $theme->getId() ? 1 : 0;
         }
     }
     public function setStatusData($theme, $value)
     {
         if (isset($theme['admin']) && $theme['admin'] == 1) {
-            set_option(PLATFORM_THEME_ADMIN, $theme->getKey());
+            set_option(PLATFORM_THEME_ADMIN, $theme->getId());
         } else {
-            set_option(PLATFORM_THEME_WEB, $theme->getKey());
+            set_option(PLATFORM_THEME_WEB, $theme->getId());
         }
         run_cmd(base_path(''), 'php artisan platform:link');
     }

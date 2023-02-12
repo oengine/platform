@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Blade;
 use OEngine\LaravelPackage\ServicePackage;
 use OEngine\Platform\Directives\PlatformBladeDirectives;
 use OEngine\Platform\Facades\Module;
+use OEngine\Platform\Facades\Platform;
 use OEngine\Platform\Facades\Plugin;
 use OEngine\Platform\Facades\Theme;
 use OEngine\Platform\Traits\WithServiceProvider;
@@ -17,6 +18,7 @@ class PlatformServiceProvider extends ServiceProvider
 
     public function configurePackage(ServicePackage $package): void
     {
+        Platform::SwitchTo('module');
         /*
          * This class is a Package Service Provider
          *

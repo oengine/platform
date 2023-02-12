@@ -3,6 +3,7 @@
 namespace OEngine\Platform\Commands;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 class PlatformActiveCommand extends Command
@@ -18,18 +19,38 @@ class PlatformActiveCommand extends Command
     protected function getOptions()
     {
         return [
-            ['type', null, InputOption::VALUE_OPTIONAL, 'Recreate existing symbolic targets.', 'module'],
+            ['type', 't', InputOption::VALUE_OPTIONAL, 'Recreate existing symbolic targets.', 'module'],
+            ['active', 'a', InputOption::VALUE_OPTIONAL, 'Recreate existing symbolic targets.', true],
         ];
     }
-
+    protected function getArguments()
+    {
+        return [
+            ['name', InputArgument::IS_ARRAY, 'The names of modules will be actived.'],
+        ];
+    }
     /**
      * Execute the console command.
      */
     public function handle(): int
     {
-        $this->components->info('Generating optimized symbolic targets.');
         $type = $this->option('type');
-        $this->components->info($type);
+        $active = $this->option('active');
+        $names = $this->argument('name');
+        $platform = platform_by($type);
+        $this->components->info('platform:' . $type);
+        foreach ($names as $name) {
+            $rs_platform = $platform->find($name);
+            if ($rs_platform) {
+                if ($active === true) {
+                    $rs_platform->Active();
+                    $this->components->info('module ' . $name . ' is Actived');
+                } else {
+                    $rs_platform->UnActive();
+                    $this->components->info('module ' . $name . ' is UnActived');
+                }
+            }
+        }
         return 0;
     }
 }

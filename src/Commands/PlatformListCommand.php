@@ -27,9 +27,12 @@ class PlatformListCommand extends Command
      */
     public function handle(): int
     {
-        $this->components->info('Generating optimized symbolic targets.');
         $type = $this->option('type');
-        $this->components->info($type);
+        $platform = platform_by($type);
+        $this->components->info('Platform:' . $type);
+        foreach ($platform->getData() as $item) {
+            $this->components->info($item->name . ':' . ($item->isActive() ? 'Actived' : 'UnActived'));
+        }
         return 0;
     }
 }

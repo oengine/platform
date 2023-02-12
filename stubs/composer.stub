@@ -9,10 +9,8 @@
     ],
     "extra": {
         "laravel": {
-            "providers": [],
-            "aliases": {
-
-            }
+            "providers": ["$NAMESPACE$\\$STUDLY_NAME$ServiceProvider"],
+            "aliases": {}
         }
     },
     "autoload": {

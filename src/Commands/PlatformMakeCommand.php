@@ -22,7 +22,10 @@ class PlatformMakeCommand extends Command
     {
         return [
             ['type', 't', InputOption::VALUE_OPTIONAL, 'Make by type', 'module'],
-            ['list', 'l', InputOption::VALUE_OPTIONAL, 'Show type list', '']
+            ['list', 'l', InputOption::VALUE_OPTIONAL, 'Show type list', ''],
+            ['active', 'a', InputOption::VALUE_OPTIONAL, 'active.', false],
+            ['force', 'f', InputOption::VALUE_OPTIONAL, 'force.', false],
+
         ];
     }
     protected function getArguments()
@@ -37,6 +40,9 @@ class PlatformMakeCommand extends Command
     public function handle(): int
     {
         $type = $this->option('type');
+        $active = $this->option('active');
+        $this->force = $this->option('force');
+
         $this->components->info('Platform make by ' . $type);
         $this->bootWithGeneratorStub();
         $names = $this->argument('name');
@@ -44,7 +50,10 @@ class PlatformMakeCommand extends Command
 
         foreach ($names as $name) {
             $code = $this->generate($name);
-            $this->components->info('module ' . $name . ' : ' .  $code);
+            $this->components->info('module ' . $name . ' : ' .  ($code == 0 ? 'OK' : 'ERROR'));
+            if ($code == 0 && $active == true) {
+                run_cmd(base_path(''), 'php artisan platform:active ' . $name . ' -t ' . $type);
+            }
             if ($code === E_ERROR) {
                 $success = false;
             }

@@ -2,9 +2,13 @@
 
 namespace OEngine\Platform;
 
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use OEngine\LaravelPackage\JsonData;
 
 use Illuminate\Support\Str;
+use OEngine\Platform\Facades\Module;
+use OEngine\Platform\Facades\Theme;
 
 class DataInfo extends JsonData
 {
@@ -21,7 +25,7 @@ class DataInfo extends JsonData
     }
     public function ReLoad()
     {
-        $temp = $this;
+        $temp = $this->CloneData();
         $this->loadJsonFromFile($temp['path'] . '/' .  $temp['fileInfo']);
         $this['path'] = $temp['path'];
         $this['fileInfo'] = $temp['fileInfo'];
@@ -134,9 +138,22 @@ class DataInfo extends JsonData
     {
         return $this['namespace'];
     }
+    public function delete()
+    {
+        File::deleteDirectory($this->getPath());
+    }
+    public function addLink()
+    {
+        if (File::exists($this->getPath('public/'))) {
+            Module::addLink($this->getPath('public/'), public_path($this->base_type . 's/' . $this->name));
+            Theme::addScript('body', $this->base_type . 's/' . $this->name . '/js/app.js');
+            Theme::addStyle('head', $this->base_type . 's/' . $this->name . '/css/app.css');
+        }
+    }
     private $providers;
     public function DoRegister()
     {
+        $this->addLink();
         if ($this->checkComposer() && !$this->checkDump()) {
             $this->Dump();
         }
