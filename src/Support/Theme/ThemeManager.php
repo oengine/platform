@@ -66,27 +66,28 @@ class ThemeManager
     public function getStatusData($theme)
     {
         if (isset($theme['admin']) && $theme['admin'] == 1) {
-            return get_option('page_admin_theme') == $theme->getKey() ? 1 : 0;
+            return get_option(PLATFORM_THEME_ADMIN) == $theme->getKey() ? 1 : 0;
         } else {
-            return get_option('page_site_theme') == $theme->getKey() ? 1 : 0;
+            return get_option(PLATFORM_THEME_WEB) == $theme->getKey() ? 1 : 0;
         }
     }
     public function setStatusData($theme, $value)
     {
         if (isset($theme['admin']) && $theme['admin'] == 1) {
-            set_option('page_admin_theme', $theme->getKey());
+            set_option(PLATFORM_THEME_ADMIN, $theme->getKey());
         } else {
-            set_option('page_site_theme', $theme->getKey());
+            set_option(PLATFORM_THEME_WEB, $theme->getKey());
         }
+        run_cmd(base_path(''), 'php artisan platform:link');
     }
     public function Layout($layout = '')
     {
         if (!isset($this->data_active) || !$this->data_active) {
 
             if (Request()->route()->getPrefix() === adminUrl()) {
-                $this->data_active = $this->findAndActive(apply_filters("filter_theme_layout", get_option('page_admin_theme', 'oengine-admin'), 1));
+                $this->data_active = $this->findAndActive(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, get_option(PLATFORM_THEME_ADMIN, 'oengine-admin'), 1));
             } else {
-                $this->data_active = $this->findAndActive(apply_filters("filter_theme_layout", get_option('page_site_theme', 'oengine-none'), 0));
+                $this->data_active = $this->findAndActive(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, get_option(PLATFORM_THEME_WEB, 'oengine-none'), 0));
             }
             if ($this->data_active == null) {
                 $this->data_active = $this->findAndActive('oengine-none');
