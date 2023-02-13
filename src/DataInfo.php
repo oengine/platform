@@ -8,6 +8,7 @@ use OEngine\LaravelPackage\JsonData;
 
 use Illuminate\Support\Str;
 use OEngine\Platform\Facades\Module;
+use OEngine\Platform\Facades\Platform;
 use OEngine\Platform\Facades\Theme;
 
 class DataInfo extends JsonData
@@ -151,7 +152,7 @@ class DataInfo extends JsonData
         }
     }
     private $providers;
-    public function DoRegister()
+    public function DoRegister($namespace = '')
     {
         $this->addLink();
         if ($this->checkComposer() && !$this->checkDump()) {
@@ -162,9 +163,11 @@ class DataInfo extends JsonData
             include_once $this->getPath('vendor/autoload.php');
             $composer = $this->getJsonFromFile($this->getPath('composer.json'));
             $providers = self::getValueByKey($composer, 'extra.laravel.providers', []);
-            $this->providers =  collect($providers)->map(function ($item) {
+            Platform::SwitchTo($namespace);
+            $this->providers =  collect($providers)->map(function ($item) use ($namespace) {
                 return app()->register($item, true);
             });
+            Platform::SwitchTo('');
         }
     }
     public function DoBoot()

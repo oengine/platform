@@ -16,13 +16,19 @@ trait WithServiceProvider
         register as protected registerBase;
         boot as protected bootBase;
     }
+    public function configurePackaged()
+    {
+        if ($name = Platform::Current()) {
+            $this->package->name($name);
+        }
+    }
     public function register()
     {
         $this->ExtendPackage();
         $this->registerBase();
         Theme::Load($this->package->basePath('/../themes'));
         Plugin::Load($this->package->basePath('/../plugins'));
-        
+
         $this->packageRegistered();
         return $this;
     }
