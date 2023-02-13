@@ -69,7 +69,7 @@ trait WithServiceProvider
                 ->group($this->package->basePath('/../routes/web.php'));
 
         if (file_exists($this->package->basePath('/../routes/admin.php')))
-            Route::middleware(...apply_filters(PLATFORM_MIDDLEWARE_ADMIN, ['web', \OEngine\Platform\Middleware\Authenticate::class, \OEngine\Platform\Middleware\Platform::class]))
+            Route::middleware(...apply_filters(PLATFORM_MIDDLEWARE_ADMIN, ['web', \OEngine\Platform\Middleware\AdminPlatform::class, \OEngine\Platform\Middleware\Platform::class]))
                 ->prefix(adminUrl())
                 ->group($this->package->basePath('/../routes/admin.php'));
 

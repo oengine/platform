@@ -80,8 +80,7 @@ class ThemeManager
     public function Layout($layout = '')
     {
         if (!isset($this->data_active) || !$this->data_active) {
-
-            if (Request()->route()->getPrefix() === adminUrl()) {
+            if (platform_route_is_admin()) {
                 $this->data_active = $this->findAndActive(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, get_option(PLATFORM_THEME_ADMIN, 'oengine-admin'), 1));
             } else {
                 $this->data_active = $this->findAndActive(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, get_option(PLATFORM_THEME_WEB, 'oengine-none'), 0));
@@ -94,7 +93,7 @@ class ThemeManager
                     return $layout;
                 }
                 if (!$this->layout) {
-                    $this->layout = 'theme::' .   $this->data_active['layout'] ?? 'layout';
+                    $this->layout = 'theme::' .   ($this->data_active['layout'] ?? 'layout');
                 }
             }
         }

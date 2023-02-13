@@ -147,14 +147,16 @@ class DataInfo extends JsonData
     {
         if (File::exists($this->getPath('public/'))) {
             Module::addLink($this->getPath('public/'), public_path($this->base_type . 's/' . $this->name));
-            Theme::addScript('body', $this->base_type . 's/' . $this->name . '/js/app.js');
-            Theme::addStyle('head', $this->base_type . 's/' . $this->name . '/css/app.css');
+            if (File::exists($this->getPath('public/js/app.js')))
+                Theme::addScript('body', $this->base_type . 's/' . $this->name . '/js/app.js');
+            if (File::exists($this->getPath('public/css/app.css')))
+                Theme::addStyle('head', $this->base_type . 's/' . $this->name . '/css/app.css');
         }
     }
     private $providers;
     public function DoRegister($namespace = '')
     {
-       
+
         $this->addLink();
         Platform::SwitchTo($namespace);
         if ($this->checkComposer() && !$this->checkDump()) {
@@ -163,13 +165,8 @@ class DataInfo extends JsonData
         if ($this->checkDump()) {
             include_once $this->getPath('vendor/autoload.php');
             $composer = $this->getJsonFromFile($this->getPath('composer.json'));
-            if($namespace=='theme'){
-                echo '<pre>';
-                print_r($composer);
-            }
             $providers = self::getValueByKey($composer, 'extra.laravel.providers', []);
-            $this->providers =  collect($providers)->map(function ($item){
-                echo Platform::Current();
+            $this->providers =  collect($providers)->map(function ($item) {
                 return app()->register($item, true);
             });
         }

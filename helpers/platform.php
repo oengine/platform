@@ -66,6 +66,12 @@ if (!function_exists('platform_by')) {
     }
 }
 
+if (!function_exists('platform_route_is_admin')) {
+    function platform_route_is_admin()
+    {
+        return in_array(\OEngine\Platform\Middleware\AdminPlatform::class, Request()->route()->gatherMiddleware());
+    }
+}
 if (!function_exists('add_action')) {
     /**
      * @param  string | array  $hook
