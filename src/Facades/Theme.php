@@ -33,6 +33,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static void getHeaderInfo()
  * @method static string getTitle()
  * @method static void setTitle($title)
+ * @method static string Layout($default='')
+ * 
  * @see \OEngine\Platform\Facades\Theme
  */
 class Theme extends Facade

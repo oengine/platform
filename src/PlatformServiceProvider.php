@@ -18,7 +18,6 @@ class PlatformServiceProvider extends ServiceProvider
 
     public function configurePackage(ServicePackage $package): void
     {
-        Platform::SwitchTo('module');
         /*
          * This class is a Package Service Provider
          *
@@ -74,6 +73,9 @@ class PlatformServiceProvider extends ServiceProvider
                 ModulePlatform.\$config=" . json_encode(apply_filters(PLATFORM_CONFIG_JS, ['url' => url(''), 'platform_url' => route('__platform__'), 'csrf_token' => csrf_token()])) . ";
             </script>
             ";
+        });
+        add_filter(PLATFORM_THEME_LAYOUT, function ($prev) {
+            return Theme::Layout();
         });
         Theme::LoadApp();
         Plugin::LoadApp();

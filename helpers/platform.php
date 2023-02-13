@@ -161,7 +161,7 @@ if (!function_exists('theme_layout')) {
      */
     function theme_layout()
     {
-        return apply_filters(PLATFORM_THEME_LAYOUT, 'none');
+        return apply_filters(PLATFORM_THEME_LAYOUT, 'theme:none');
     }
 }
 if (!function_exists('theme_class')) {

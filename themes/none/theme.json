@@ -1,10 +1,13 @@
 {
-  "id": "oengine/platform/theme/none",
-  "name": "oengine-none",
+  "id":"theme-none-f9687ef3-74a7-47ac-900b-f2cc8f4333b93637842",
+  "name": "none",
+  "alias": "none",
   "hide": true,
   "description": "",
-  "author": "nguyen van hau",
-  "namespace": "Theme\\OEngineNone",
-  "layout": "layout",
-  "required_plugins": []
+  "keywords": [],
+  "priority": 100,
+  "namespace":"Platform\\Themes\\None",
+  "aliases": {},
+  "files": [],
+  "requires": []
 }

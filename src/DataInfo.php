@@ -154,21 +154,26 @@ class DataInfo extends JsonData
     private $providers;
     public function DoRegister($namespace = '')
     {
+       
         $this->addLink();
+        Platform::SwitchTo($namespace);
         if ($this->checkComposer() && !$this->checkDump()) {
             $this->Dump();
         }
-
         if ($this->checkDump()) {
             include_once $this->getPath('vendor/autoload.php');
             $composer = $this->getJsonFromFile($this->getPath('composer.json'));
+            if($namespace=='theme'){
+                echo '<pre>';
+                print_r($composer);
+            }
             $providers = self::getValueByKey($composer, 'extra.laravel.providers', []);
-            Platform::SwitchTo($namespace);
-            $this->providers =  collect($providers)->map(function ($item) use ($namespace) {
+            $this->providers =  collect($providers)->map(function ($item){
+                echo Platform::Current();
                 return app()->register($item, true);
             });
-            Platform::SwitchTo('');
         }
+        Platform::SwitchTo('');
     }
     public function DoBoot()
     {

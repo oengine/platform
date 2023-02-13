@@ -2,6 +2,7 @@
 
 namespace OEngine\Platform\Support\Theme;
 
+use Illuminate\Support\Facades\Log;
 use OEngine\Platform\DataInfo;
 use OEngine\Platform\Traits\WithSystemExtend;
 

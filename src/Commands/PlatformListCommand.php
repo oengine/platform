@@ -18,7 +18,7 @@ class PlatformListCommand extends Command
     protected function getOptions()
     {
         return [
-            ['type', null, InputOption::VALUE_OPTIONAL, 'Recreate existing symbolic targets.', 'module'],
+            ['type', 't', InputOption::VALUE_OPTIONAL, 'Recreate existing symbolic targets.', 'module'],
         ];
     }
 
