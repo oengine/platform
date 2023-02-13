@@ -9,7 +9,7 @@ use OEngine\Platform\Commands\PlatformMakeFileCommand;
 
 return [
     'updator' => [
-        'url' =>  env('PLATFORM_UPDATOR_URL', 'http://updator.local/version.json'),
+        'url' =>  env('PLATFORM_UPDATOR_URL', 'https://oengine.github.io/files/version.json'),
         'temps' => env('PLATFORM_UPDATOR_TEMP', 'temps')
     ],
     'appdir' => [
