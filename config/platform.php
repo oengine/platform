@@ -1,12 +1,17 @@
 <?php
 
 use OEngine\Platform\Commands\PlatformActiveCommand;
+use OEngine\Platform\Commands\PlatformInstallCommand;
 use OEngine\Platform\Commands\PlatformLinkCommand;
 use OEngine\Platform\Commands\PlatformListCommand;
 use OEngine\Platform\Commands\PlatformMakeCommand;
 use OEngine\Platform\Commands\PlatformMakeFileCommand;
 
 return [
+    'updator' => [
+        'url' =>  env('PLATFORM_UPDATOR_URL', 'http://updator.local/version.json'),
+        'temps' => env('PLATFORM_UPDATOR_TEMP', 'temps')
+    ],
     'appdir' => [
         'root' =>  env('PLATFORM_ROOT', 'platform'),
         'theme' => env('PLATFORM_THEME', 'themes'),
@@ -21,6 +26,7 @@ return [
     'commands' => [
         PlatformLinkCommand::class,
         PlatformListCommand::class,
+        PlatformInstallCommand::class,
         PlatformMakeCommand::class,
         PlatformMakeFileCommand::class,
         PlatformActiveCommand::class

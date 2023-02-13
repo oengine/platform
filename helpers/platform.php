@@ -183,7 +183,7 @@ if (!function_exists('path_by')) {
     /**
      * @param  string 
      */
-    function path_by($name, $path)
+    function path_by($name, $path = '')
     {
         return base_path(config('platform.appdir.root') . '/' . config('platform.appdir.' . $name) . '/' . $path);
     }
