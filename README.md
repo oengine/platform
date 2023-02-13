@@ -20,7 +20,23 @@ $ composer require oengine/platform
 ```
 
 ## Usage
+Make module:
 
+```bash
+$ php artisan platform:make Demo3 -a true -t module -f true
+```
+
+Make plugin:
+
+```bash
+$ php artisan platform:make Demo3 -a true -t plugin -f true
+```
+
+Make theme:
+
+```bash
+$ php artisan platform:make Demo3 -a true -t theme -f true
+```
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
