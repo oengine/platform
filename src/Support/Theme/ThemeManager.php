@@ -3,8 +3,6 @@
 namespace OEngine\Platform\Support\Theme;
 
 use OEngine\Platform\DataInfo;
-use OEngine\Platform\Facades\Module;
-use OEngine\Platform\Facades\Platform;
 use OEngine\Platform\Traits\WithSystemExtend;
 
 class ThemeManager
@@ -50,17 +48,14 @@ class ThemeManager
     {
         $this->layout = 'theme::' . $layout;
     }
-    public function findAndActive($theme, $link = false)
+    public function findAndActive($theme)
     {
         $theme_data = $this->find($theme);
         if ($theme_data == null) return null;
         if ($parent = $theme_data['parent']) {
-            $this->findAndActive($parent, $link);
+            $this->findAndActive($parent);
         }
         $theme_data->DoRegister('theme');
-        if ($link) {
-            Module::addLink($theme_data->getPath('public'), $theme_data->getPublic());
-        }
         return $theme_data;
     }
 
