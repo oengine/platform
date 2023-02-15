@@ -14,7 +14,7 @@ export class PlatformComponent {
   openComponent(key, toEl) {
     const self = this;
     if (!toEl) toEl = document.body;
-    this.manager.$utils
+    this.manager
       .request(self.manager.getUrl("component"), {
         method: "post",
         body: JSON.stringify({
@@ -24,15 +24,12 @@ export class PlatformComponent {
       .then(async (response) => {
         if (response.ok) {
           let data = await response.json();
-          let el = self.manager.$utils.htmlToElement(data.html);
+          let el = self.manager.htmlToElement(data.html);
           toEl.appendChild(el);
-          window?.livewire?.rescan();
           self.triggerEventComponent(el);
-          window.dispatchEvent(new CustomEvent("platform::component", el));
+          this.manager.dispatch("platform::component", el);
         } else {
-          window.dispatchEvent(
-            new CustomEvent("platform::error", { response })
-          );
+          this.manager.dispatch("platform::error", { response });
         }
       });
   }
@@ -54,7 +51,7 @@ export class PlatformComponent {
     this.openComponent(strComponent, targetTo);
   }
   init() {
-    window?.addEventListener("platform::component", (el) => {
+    this.manager.addEventListener("platform::component", (el) => {
       self.triggerEventComponent(el);
     });
   }

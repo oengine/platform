@@ -26,7 +26,7 @@ trait WithDoAction
     public function DoAction($action, $param)
     {
         $_param = $this->JsonDecode($this->Base64Decode($param));
-        $this->__Params = [...$this->__Params, ...$_param];
+        $this->__Params = array_merge($this->__Params, $_param);
         $action = $this->Base64Decode($action);
         return  app($action)->SetComponent($this)->SetParam($this->__Params)->DoAction();
     }
