@@ -6,9 +6,10 @@
   "homepage": "https://github.com/oengine/platform",
   "authors": [
     {
-      "name": "nguyen van hau",
+      "name": "Nguyen Van Hau",
       "email": "nguyenvanhau.soft@gmail.com",
-      "role": "Developer"
+      "role": "Developer",
+      "homepage": "https://github.com/devhau"
     }
   ],
   "require": {
