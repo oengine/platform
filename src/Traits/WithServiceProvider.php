@@ -2,7 +2,6 @@
 
 namespace OEngine\Platform\Traits;
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use OEngine\LaravelPackage\WithServiceProvider as WithServiceProviderBase;
 use OEngine\Platform\Facades\Platform;

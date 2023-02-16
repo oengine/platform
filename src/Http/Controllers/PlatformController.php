@@ -14,7 +14,10 @@ class PlatformController extends BaseController
         $data = platform_decode($request->get('key'));
         $dataParams = [];
         $data = apply_filters(PLATFORM_DO_COMPONENT, $dataParams);
-        if ($data !== $dataParams) return $data;
+        if (!is_array($data) && $data !== $dataParams) {
+            $data = ['data' => $data];
+        }
+        if ($data !== $dataParams) return array_merge($data, ['csrf_token' => csrf_token()]);
         if ($data) {
             try {
                 $params = isset($data['params']) ? $data['params'] : [];
@@ -25,10 +28,10 @@ class PlatformController extends BaseController
                     ];
                 }
             } catch (\Exception $ex) {
-                return ['html' => '<div>not found</div>', 'data' => $data, 'error' => $ex, 'error_code' => 500];
+                return ['html' => '<div>not found</div>', 'data' => $data, 'error' => $ex, 'error_code' => 500, 'csrf_token' => csrf_token()];
             }
         }
-        return ['html' => '<div>not found</div>', 'data' => $data, 'error' => 'not found', 'error_code' => 404];
+        return ['html' => '<div>not found</div>', 'data' => $data, 'error' => 'not found', 'error_code' => 404, 'csrf_token' => csrf_token()];
     }
     public function doEvents(Request $request)
     {

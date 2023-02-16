@@ -2,7 +2,7 @@ export class PlatformComponent {
   manager = undefined;
   triggerEventComponent(el) {
     const self = this;
-    el.querySelectorAll("platform\\:component]")?.forEach((elItem) => {
+    el.querySelectorAll("[platform\\:component]").forEach((elItem) => {
       elItem.removeEventListener(
         "click",
         self.clickEventComponent.bind(self),
@@ -24,14 +24,27 @@ export class PlatformComponent {
       .then(async (response) => {
         if (response.ok) {
           let data = await response.json();
-          let el = self.manager.htmlToElement(data.html);
-          toEl.appendChild(el);
-          self.triggerEventComponent(el);
-          this.manager.dispatch("platform::component", el);
+          if (!data.error_code) {
+            let el = self.manager.htmlToElement(data.html);
+            toEl.appendChild(el);
+            self.triggerEventComponent(el);
+            this.manager.dispatch("platform::component", el);
+          } else {
+            this.manager.dispatch("platform::error", {
+              error: response,
+              type: "platform::component",
+              toEl,
+              key,
+            });
+          }
+
+          if (data.csrf_token)
+            this.manager.$config["csrf_token"] = data.csrf_token;
         } else {
           this.manager.dispatch("platform::error", {
             error: response,
             type: "platform::component",
+            toEl,
             key,
           });
         }
@@ -55,8 +68,12 @@ export class PlatformComponent {
     this.openComponent(strComponent, targetTo);
   }
   init() {
-    this.manager.addEventListener("platform::component", (el) => {
+    const self = this;
+    this.manager.on("platform::component", (el) => {
       self.triggerEventComponent(el);
+    });
+    this.manager.on("platform::error", (error) => {
+      console.log(error);
     });
   }
   loading() {

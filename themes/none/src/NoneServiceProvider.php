@@ -4,6 +4,7 @@ namespace Platform\Themes\None;
 
 use Illuminate\Support\ServiceProvider;
 use OEngine\LaravelPackage\ServicePackage;
+use OEngine\Platform\Facades\Platform;
 use OEngine\Platform\Traits\WithServiceProvider;
 
 class NoneServiceProvider extends ServiceProvider
@@ -12,19 +13,24 @@ class NoneServiceProvider extends ServiceProvider
 
     public function configurePackage(ServicePackage $package): void
     {
-        echo '123';
         /*
          * This class is a Package Service Provider
          *
          */
         $package
-            ->name('none')
+            ->name('theme')
             ->hasConfigFile()
             ->hasViews()
             ->hasHelpers()
             ->hasAssets()
             ->hasTranslations()
             ->runsMigrations();
+    }
+    public function configurePackaged()
+    {
+        if ($name = Platform::Current()) {
+            $this->package->name($name);
+        }
     }
     public function extending()
     {

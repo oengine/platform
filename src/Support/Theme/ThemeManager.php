@@ -86,7 +86,7 @@ class ThemeManager
                 $this->data_active = $this->findAndActive(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, get_option(PLATFORM_THEME_WEB, 'oengine-none'), 0));
             }
             if ($this->data_active == null) {
-                $this->data_active = $this->findAndActive('oengine-none');
+                $this->data_active = $this->findAndActive('none');
             }
             if ($this->data_active) {
                 if ($layout != '') {

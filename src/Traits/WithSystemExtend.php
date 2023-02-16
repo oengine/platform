@@ -3,9 +3,7 @@
 namespace OEngine\Platform\Traits;
 
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 use OEngine\Platform\DataInfo;
-use OEngine\Platform\Facades\Platform;
 
 trait WithSystemExtend
 {
@@ -103,6 +101,10 @@ trait WithSystemExtend
                 $this->AddItem($item);
             }
         }
+    }
+    public function checkLink($path)
+    {
+        (new DataInfo($path, $this))->addLink();
     }
     public function AddItem($path)
     {
