@@ -7,5 +7,7 @@
     "priority": 200,
     "aliases": {},
     "namespace":"$NAMESPACE$",
+    "layout":"layout",
+    "layouts":["none","layout"],
     "requires": []
 }

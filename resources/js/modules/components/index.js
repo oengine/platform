@@ -13,7 +13,7 @@ export class PlatformComponent {
   }
   openComponent(key, toEl) {
     const self = this;
-    if (!toEl) toEl = document.body;
+    if (!toEl) toEl = document?.body;
     this.manager
       .request(self.manager.getUrl("component"), {
         method: "post",
@@ -29,7 +29,11 @@ export class PlatformComponent {
           self.triggerEventComponent(el);
           this.manager.dispatch("platform::component", el);
         } else {
-          this.manager.dispatch("platform::error", { response });
+          this.manager.dispatch("platform::error", {
+            error: response,
+            type: "platform::component",
+            key,
+          });
         }
       });
   }
@@ -46,7 +50,7 @@ export class PlatformComponent {
       }
     }
     if (!targetTo) {
-      targetTo = document.body;
+      targetTo = document?.body;
     }
     this.openComponent(strComponent, targetTo);
   }
@@ -57,7 +61,7 @@ export class PlatformComponent {
   }
   loading() {
     const self = this;
-    self.triggerEventComponent(document.body);
+    self.triggerEventComponent(document?.body);
   }
   unint() {}
 }

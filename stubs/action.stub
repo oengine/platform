@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$;
 
-use OEngine\Core\Support\Core\ActionBase;
+use OEngine\Platform\Support\Core\ActionBase;
 
 class $CLASS$ extends ActionBase
 {

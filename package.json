@@ -17,7 +17,6 @@
     "sass-loader": "^12.3.0"
   },
   "dependencies": {
-    "alpinejs": "^3.10.4",
     "whatwg-fetch": "^3.6.2"
   }
 }

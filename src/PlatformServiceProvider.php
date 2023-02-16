@@ -60,14 +60,10 @@ class PlatformServiceProvider extends ServiceProvider
             echo Theme::getHeaderInfo();
         });
         add_action(PLATFORM_HEAD_AFTER, function () {
-            if (class_exists(\Livewire\Livewire::class))
-                echo \Livewire\Livewire::styles();
-            echo Theme::loadAsset('head');
+            echo Theme::loadAsset(PLATFORM_HEAD_AFTER);
         });
         add_action(PLATFORM_BODY_AFTER, function () {
-            if (class_exists(\Livewire\Livewire::class))
-                echo \Livewire\Livewire::scripts();
-            echo Theme::loadAsset('body');
+            echo Theme::loadAsset(PLATFORM_BODY_AFTER);
             echo "
             <script type='text/javascript'>
                 ModulePlatform.\$config=" . json_encode(apply_filters(PLATFORM_CONFIG_JS, ['url' => url(''), 'platform_url' => route('__platform__'), 'csrf_token' => csrf_token()])) . ";

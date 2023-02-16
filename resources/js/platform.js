@@ -8,14 +8,13 @@ export class ModulePlatform extends Event {
   getCsrfToken() {
     const tokenTag = document.head.querySelector('meta[name="csrf-token"]');
 
-    if (tokenTag&&tokenTag.content) {
+    if (tokenTag && tokenTag.content) {
       return tokenTag.content;
     }
 
-    return (
-      window.livewire_token ?? ModulePlatform.$config["csrf_token"]
-    );
-  },
+    return window.livewire_token ?? ModulePlatform.$config["csrf_token"];
+  }
+
   request(url, option = {}) {
     let csrfToken = this.getCsrfToken();
     return fetch(url, {

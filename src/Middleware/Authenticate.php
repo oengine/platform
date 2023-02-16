@@ -8,9 +8,9 @@ use Illuminate\Support\Str;
 
 class Authenticate extends Middleware
 {
-    public function handle($request, Closure $next, ...$guards)
+    public function handle($request, Closure $next, $guards)
     {
-        $response = parent::handle($request, $next, ...$guards);
+        $response = parent::handle($request, $next, $guards);
         // Like: users.index
         $route = $request->route()->getName();
         //skip with prexfix '_'

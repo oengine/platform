@@ -8,7 +8,6 @@ use OEngine\LaravelPackage\WithServiceProvider as WithServiceProviderBase;
 use OEngine\Platform\Facades\Platform;
 use OEngine\Platform\Facades\Plugin;
 use OEngine\Platform\Facades\Theme;
-use OEngine\Platform\Livewire\LivewireLoader;
 
 trait WithServiceProvider
 {
@@ -28,7 +27,7 @@ trait WithServiceProvider
         $this->registerBase();
         Theme::Load($this->package->basePath('/../themes'));
         Plugin::Load($this->package->basePath('/../plugins'));
-
+        do_action(PLATFORM_SERVICE_PROVIDER_REGISTER, $this);
         $this->packageRegistered();
         return $this;
     }
@@ -37,10 +36,7 @@ trait WithServiceProvider
     public function boot()
     {
         $this->bootBase();
-        if (class_exists('\\Livewire\\Component')) {
-            LivewireLoader::Register($this->package->basePath('/Http/Livewire'), $this->getNamespaceName() . '\\Http\\Livewire', $this->package->shortName() . '::');
-            LivewireLoader::RegisterWidget($this->package->basePath('/../widgets'), $this->getNamespaceName() . '\\Widget', $this->package->shortName() . '::');
-        }
+        do_action(PLATFORM_SERVICE_PROVIDER_BOOT, $this);
         if ($this->app->runningInConsole()) {
             if ($this->package->runsMigrations) {
                 AllFile($this->package->basePath("/../database/migrations/"), function ($file) {
@@ -60,16 +56,16 @@ trait WithServiceProvider
         }
 
         if (file_exists($this->package->basePath('/../routes/api.php')))
-            Route::middleware(...apply_filters(PLATFORM_MIDDLEWARE_API, ['api']))
+            Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_API, ['api', \OEngine\Platform\Middleware\Platform::class]))
                 ->prefix('api')
                 ->group($this->package->basePath('/../routes/api.php'));
 
         if (file_exists($this->package->basePath('/../routes/web.php')))
-            Route::middleware(...apply_filters(PLATFORM_MIDDLEWARE_WEB, ['web', \OEngine\Platform\Middleware\Platform::class]))
+            Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_WEB, ['web', \OEngine\Platform\Middleware\Platform::class]))
                 ->group($this->package->basePath('/../routes/web.php'));
 
         if (file_exists($this->package->basePath('/../routes/admin.php')))
-            Route::middleware(...apply_filters(PLATFORM_MIDDLEWARE_ADMIN, ['web', \OEngine\Platform\Middleware\AdminPlatform::class, \OEngine\Platform\Middleware\Platform::class]))
+            Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_ADMIN, ['web', \OEngine\Platform\Middleware\AdminPlatform::class, \OEngine\Platform\Middleware\Platform::class]))
                 ->prefix(adminUrl())
                 ->group($this->package->basePath('/../routes/admin.php'));
 

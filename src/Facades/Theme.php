@@ -29,6 +29,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static mix getAsset($key, $default = '')
  * @method static void addScript($local, $contentOrPath, $cdn = '', $priority = 20, $isLink = true)
  * @method static void addStyle($local, $contentOrPath, $cdn = '', $priority = 20, $isLink = true)
+ * @method static void contentScript($content, $priority = 20)
+ * @method static void contentStyle($content, $priority = 20)
  * @method static string loadAsset($local)
  * @method static void getHeaderInfo()
  * @method static string getTitle()

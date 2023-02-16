@@ -42,6 +42,7 @@ trait WithGeneratorStub
         return $this;
     }
 
+    protected $ConfigStubName = 'platform';
     protected $GeneratorConfig;
     private $_base_name;
     private $_system_base;
@@ -63,7 +64,7 @@ trait WithGeneratorStub
         Filesystem $filesystem = null
     ) {
         $this->filesystem = $filesystem ?? $this->laravel['files'];
-        $this->GeneratorConfig = config('platform');
+        $this->GeneratorConfig = config($this->ConfigStubName);
     }
     public function getBaseTypeName()
     {
@@ -147,7 +148,7 @@ trait WithGeneratorStub
     public function getPathStub($path)
     {
         $path_stub = $this->getStub() . '/' . $path;
-        return file_exists($path_stub) ? $path_stub : __DIR__ . '/../stubs' . '/' .  $path;
+        return file_exists($path_stub) ? $path_stub : __DIR__ . '/../../stubs' . '/' .  $path;
     }
     public function getContentWithStub($stub)
     {

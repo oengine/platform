@@ -44,6 +44,14 @@ trait WithAsset
         $this->arrStyle[$local][$priority] = compact('contentOrPath', 'cdn', 'isLink');
     }
 
+    public function contentScript($content, $priority = 20)
+    {
+        $this->addScript(PLATFORM_BODY_AFTER, $content, '', $priority, false);
+    }
+    public function contentStyle($content, $priority = 20)
+    {
+        $this->addStyle(PLATFORM_HEAD_AFTER, $content, '', $priority, false);
+    }
     public function loadAsset($local)
     {
         ob_start();

@@ -305,7 +305,7 @@ if (!function_exists('checkRole')) {
 if (!function_exists('adminUrl')) {
     function adminUrl()
     {
-        return  apply_filters(PLATFORM_URL_ADMIN, "");
+        return apply_filters(PLATFORM_URL_ADMIN, "");
     }
 }
 if (!function_exists('page_title')) {
@@ -346,12 +346,14 @@ if (!function_exists('get_option')) {
             if (Cache::has($key) && Cache::get($key) != '') return Cache::get($key);
             $setting = Option::where('key', trim($key))->first();
             if ($setting == null) {
+                Cache::forever($key, $default);
                 return $default;
             }
             //Set Cache Forever
             Cache::forever($key, $setting->value);
             return $setting->value ?? $default;
         } catch (\Exception $e) {
+            Cache::forever($key, $default);
             return $default;
         }
     }

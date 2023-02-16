@@ -148,9 +148,9 @@ class DataInfo extends JsonData
         if (File::exists($this->getPath('public/'))) {
             Module::addLink($this->getPath('public/'), public_path($this->base_type . 's/' . $this->name));
             if (File::exists($this->getPath('public/js/app.js')))
-                Theme::addScript('body', $this->base_type . 's/' . $this->name . '/js/app.js');
+                Theme::addScript(PLATFORM_BODY_AFTER, $this->base_type . 's/' . $this->name . '/js/app.js');
             if (File::exists($this->getPath('public/css/app.css')))
-                Theme::addStyle('head', $this->base_type . 's/' . $this->name . '/css/app.css');
+                Theme::addStyle(PLATFORM_HEAD_AFTER, $this->base_type . 's/' . $this->name . '/css/app.css');
         }
     }
     private $providers;

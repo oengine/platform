@@ -4,9 +4,8 @@
     "alias": "$LOWER_NAME$",
     "description": "",
     "keywords": [],
-    "priority": 100,
-    "namespace":"$NAMESPACE$",
+    "priority": 200,
     "aliases": {},
-    "files": [],
+    "namespace":"$NAMESPACE$",
     "requires": []
 }

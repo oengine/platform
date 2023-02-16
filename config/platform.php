@@ -100,11 +100,11 @@ return [
                 'json'
             ],
             'theme' => [
-                'layout',
-                'layout-none',
+                'views/layout',
+                'views/layout-none',
                 'composer',
                 'provider-base',
-                'json'
+                'json-theme'
             ],
             'plugin' => [
                 'composer',
@@ -128,13 +128,17 @@ return [
                 'path' => 'views',
                 'name' => 'index.blade.php'
             ],
-            'layout' => [
+            'views/layout' => [
                 'path' => 'views',
                 'name' => 'layout.blade.php'
             ],
-            'layout-none' => [
+            'views/layout-none' => [
                 'path' => 'views',
                 'name' => 'none.blade.php'
+            ],
+            'views/layout-name' => [
+                'path' => 'views',
+                'name' => '$LOWER_NAME$.blade.php'
             ],
             'assets/js/app' => [
                 'path' => 'assets',
@@ -223,7 +227,7 @@ return [
                     'JSON_ID'
                 ]
             ],
-            'json-function' => [
+            'json-theme' => [
                 'name' => '$BASE_TYPE_LOWER_NAME$.json',
                 'doblue' => true,
                 'replacements' => [
@@ -378,27 +382,6 @@ return [
                     'CLASS',
                     'NAMESPACE',
                     'LOWER_NAME'
-                ]
-            ],
-            'livewire' => [
-                'path' => 'livewire',
-                'name' => '$CLASS_FILE$.php',
-                'replacements' => [
-                    'CLASS',
-                    'NAMESPACE',
-                    'LOWER_NAME',
-                    'VIEW_NAME'
-                ]
-            ],
-
-            'livewire-inline' => [
-                'path' => 'livewire',
-                'name' => '$CLASS_FILE$.php',
-                'replacements' => [
-                    'CLASS',
-                    'NAMESPACE',
-                    'LOWER_NAME',
-                    'QUOTE'
                 ]
             ],
             'mail' => [
@@ -567,27 +550,7 @@ return [
                 'replacements' => [
                     'FILE_MIGRATION',
                 ]
-            ],
-            'table' => [
-                'path' => 'table',
-                'name' => '$LOWER_CLASS_FILE$.php',
-                'replacements' => [
-                    'CLASS',
-                    'NAMESPACE_MODEL',
-                    'NAMESPACE',
-                    'LOWER_NAME',
-                    'LOWER_CLASS'
-                ]
-            ],
-            'option' => [
-                'path' => 'option',
-                'name' => '$LOWER_CLASS_FILE$.php',
-                'replacements' => [
-                    'CLASS',
-                    'NAMESPACE',
-                    'LOWER_NAME',
-                ]
-            ],
+            ]
         ],
         'gitkeep' => true,
     ],
@@ -595,8 +558,6 @@ return [
         'base' => ['path' => '', 'namespace' => '', 'generate' => false],
         'src' => ['path' => 'src', 'namespace' => '', 'generate' => false],
         'config' => ['path' => 'config', 'generate' => true, 'only' => ['module']],
-        'table' => ['path' => 'config/tables', 'generate' => true, 'only' => ['module']],
-        'option' => ['path' => 'config/options', 'generate' => true, 'only' => ['module']],
         'command' => ['path' => 'src/Commands', 'namespace' => 'Commands', 'generate' => true, 'only' => ['module']],
         'migration' => ['path' => 'database/migrations', 'namespace' => 'Database\\Migrations', 'generate' => true, 'only' => ['module']],
         'seeder' => ['path' => 'database/seeders', 'namespace' => 'Database\\Seeders', 'generate' => true, 'only' => ['module']],
@@ -604,7 +565,6 @@ return [
         'model' => ['path' => 'src/Models', 'namespace' => 'Models', 'generate' => true, 'only' => ['module']],
         'routes' => ['path' => 'routes', 'generate' => true, 'only' => ['module']],
         'controller' => ['path' => 'src/Http/Controllers', 'namespace' => 'Http\\Controllers', 'generate' => true, 'only' => ['module']],
-        'livewire' => ['path' => 'src/Http/Livewire', 'namespace' => 'Http\\Livewire', 'generate' => true, 'only' => ['module']],
         'middleware' => ['path' => 'src/Http/Middleware', 'namespace' => 'Http\\Middleware', 'generate' => true, 'only' => ['module']],
         'action' => ['path' => 'src/Http/Action', 'namespace' => 'Http\\Action', 'generate' => true, 'only' => ['module']],
         'request' => ['path' => 'src/Http/Requests', 'namespace' => 'Http\\Requests', 'generate' => true, 'only' => ['module']],

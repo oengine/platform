@@ -4,7 +4,7 @@ namespace OEngine\Platform\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use OEngine\Core\Traits\WithSlug;
+use OEngine\Platform\Traits\WithSlug;
 
 class Role extends Model
 {
