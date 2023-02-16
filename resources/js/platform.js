@@ -4,7 +4,7 @@ export class ModulePlatform extends Event {
   $config = {};
   $module = {};
   $loaded = false;
-
+  $debug = false;
   getCsrfToken() {
     if (this.$config["csrf_token"]) return this.$config["csrf_token"];
     const tokenTag = document.head.querySelector('meta[name="csrf-token"]');
@@ -43,6 +43,13 @@ export class ModulePlatform extends Event {
     var template = document.createElement("template");
     template.innerHTML = html;
     return template.content.childNodes;
+  }
+  addError(error, type = "platform", meta = {}) {
+    this.dispatch("platform::error", {
+      error,
+      type,
+      meta,
+    });
   }
   getUrl($url) {
     return this.$config["platform_url"] + "/" + $url;
@@ -123,6 +130,11 @@ export class ModulePlatform extends Event {
     const self = this;
     window.addEventListener("DOMContentLoaded", function () {
       self.init().loading();
+    });
+    self.on("platform::error", (error) => {
+      if (self.$debug == true) {
+        console.log(error);
+      }
     });
   }
 }

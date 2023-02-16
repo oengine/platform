@@ -66,7 +66,10 @@ class PlatformServiceProvider extends ServiceProvider
             echo Theme::loadAsset(PLATFORM_BODY_AFTER);
             echo "
             <script type='text/javascript'>
+            setTimeout(function(){
+                ModulePlatform.\$debug=" . (env('MODULE_PLATFORM_DEBUG', false) ? 'true' : 'false') . ";
                 ModulePlatform.\$config=" . json_encode(apply_filters(PLATFORM_CONFIG_JS, ['url' => url(''), 'platform_url' => route('__platform__'), 'csrf_token' => csrf_token()])) . ";
+            },0)
             </script>
             ";
         });
