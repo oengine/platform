@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static mixed downloadFile(string $name)
  * @method static mixed install(string $name)
  * @method static mixed installLocal(string $file)
+ * @method static mixed Load(string $path)
  * 
  *
  * @see \OEngine\Platform\Facades\Platform

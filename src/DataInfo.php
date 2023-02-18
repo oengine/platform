@@ -3,7 +3,6 @@
 namespace OEngine\Platform;
 
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log;
 use OEngine\LaravelPackage\JsonData;
 
 use Illuminate\Support\Str;
@@ -22,7 +21,12 @@ class DataInfo extends JsonData
         $this['fileInfo'] =  $parent->FileInfoJson();
         $this['public'] =  $parent->PublicFolder();
         $this['base_type'] = $parent->getName();
+        $this->loadAll($path);
         $this->ReLoad();
+    }
+    public function loadAll($path)
+    {
+        Platform::Load($path);
     }
     public function ReLoad()
     {
@@ -143,21 +147,13 @@ class DataInfo extends JsonData
     {
         File::deleteDirectory($this->getPath());
     }
-    public function addLink()
-    {
-        if (File::exists($this->getPath('public/'))) {
-            Module::addLink($this->getPath('public/'), public_path($this->base_type . 's/' . $this->name));
-            if (File::exists($this->getPath('public/js/app.js')))
-                Theme::addScript(PLATFORM_BODY_AFTER, $this->base_type . 's/' . $this->name . '/js/app.js');
-            if (File::exists($this->getPath('public/css/app.css')))
-                Theme::addStyle(PLATFORM_HEAD_AFTER, $this->base_type . 's/' . $this->name . '/css/app.css');
-        }
-    }
     private $providers;
     public function DoRegister($namespace = '')
     {
 
-        $this->addLink();
+        if (File::exists($this->getPath('public/'))) {
+            Module::addLink($this->getPath('public/'), public_path($this->base_type . 's/' . $this->name));
+        }
         Platform::SwitchTo($namespace);
         if ($this->checkComposer() && !$this->checkDump()) {
             $this->Dump();
@@ -166,14 +162,23 @@ class DataInfo extends JsonData
             include_once $this->getPath('vendor/autoload.php');
             $composer = $this->getJsonFromFile($this->getPath('composer.json'));
             $providers = self::getValueByKey($composer, 'extra.laravel.providers', []);
-            $this->providers =  collect($providers)->map(function ($item) {
-                return app()->register($item, true);
+            $dataInfo = $this;
+            $this->providers =  collect($providers)->map(function ($item) use ($dataInfo) {
+                $provider = app()->register($item, true);
+                if (method_exists($provider, 'setDataInfo')) {
+                    $provider->setDataInfo($dataInfo);
+                }
+                return $provider;
             });
         }
         Platform::SwitchTo('');
     }
     public function DoBoot()
     {
+        if (File::exists($this->getPath('public/js/app.js')))
+            Theme::addScript(PLATFORM_BODY_AFTER, url($this->base_type . 's/' . $this->name . '/js/app.js'));
+        if (File::exists($this->getPath('public/css/app.css')))
+            Theme::addStyle(PLATFORM_HEAD_AFTER, url($this->base_type . 's/' . $this->name . '/css/app.css'));
         if (isset($this->providers) && $this->providers != null && is_array($this->providers) && count($this->providers) > 0) {
             foreach ($this->providers as $item) {
                 if (method_exists($item, 'boot'))

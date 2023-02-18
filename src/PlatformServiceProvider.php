@@ -2,8 +2,11 @@
 
 namespace OEngine\Platform;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
 use OEngine\LaravelPackage\ServicePackage;
 use OEngine\Platform\Directives\PlatformBladeDirectives;
 use OEngine\Platform\Facades\Module;
@@ -45,12 +48,14 @@ class PlatformServiceProvider extends ServiceProvider
     {
         Module::BootApp();
         Plugin::BootApp();
-        Module::checkLink($this->package->basePath('../'));
+        Theme::BootApp();
     }
     public function bootingPackage()
     {
-        Module::RegisterApp();
-        Plugin::RegisterApp();
+        Module::LoadApp();
+        Theme::LoadApp();
+        Theme::RegisterTheme();
+        Plugin::LoadApp();
     }
 
     public function packageRegistered()
@@ -76,8 +81,5 @@ class PlatformServiceProvider extends ServiceProvider
         add_filter(PLATFORM_THEME_LAYOUT, function ($prev) {
             return Theme::Layout();
         });
-        Theme::LoadApp();
-        Plugin::LoadApp();
-        Module::LoadApp();
     }
 }

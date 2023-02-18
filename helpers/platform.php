@@ -5,6 +5,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\Finder\SplFileInfo;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use OEngine\Platform\Facades\Module;
 use OEngine\Platform\Facades\Plugin;
 use OEngine\Platform\Facades\Theme;
@@ -66,7 +67,7 @@ if (!function_exists('platform_by')) {
 if (!function_exists('platform_route_is_admin')) {
     function platform_route_is_admin()
     {
-        return in_array(\OEngine\Platform\Middleware\AdminPlatform::class, Request()->route()->gatherMiddleware());
+        return in_array(\OEngine\Platform\Middleware\ThemeAdmin::class, Request()->route()->gatherMiddleware());
     }
 }
 
@@ -241,6 +242,7 @@ if (!function_exists('set_option')) {
                 $setting->delete();
             }
         } catch (\Exception $e) {
+            Log::info($e);
         }
     }
 }
@@ -262,7 +264,9 @@ if (!function_exists('get_option')) {
             Cache::forever($key, $setting->value);
             return $setting->value ?? $default;
         } catch (\Exception $e) {
-            Cache::forever($key, $default);
+            if ($default)
+                Cache::forever($key, $default);
+
             return $default;
         }
     }

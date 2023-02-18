@@ -12,6 +12,11 @@ trait WithSystemExtend
         $this->arrData = collect([]);
     }
     private $arrData = [];
+
+    public function isRegisterBeforeLoad()
+    {
+        return true;
+    }
     public function getName()
     {
         return 'info';
@@ -44,7 +49,7 @@ trait WithSystemExtend
     }
     public function LoadApp()
     {
-        $this->Load(apply_filters($this->HookFilterPath(), $this->PathFolder()));
+        $this->Load($this->PathFolder());
     }
     public function RegisterApp()
     {
@@ -96,15 +101,17 @@ trait WithSystemExtend
     }
     public function Load($path)
     {
+        $path = apply_filters($this->HookFilterPath(), $path);
         if ($files =  glob($path . '/*', GLOB_ONLYDIR)) {
-            foreach ($files as $item) {
-                $this->AddItem($item);
+            foreach ($files as $itemFile) {
+                $item = $this->AddItem($itemFile);
+                if ($this->isRegisterBeforeLoad()) {
+                    if ($item->isActive()) {
+                        $item->DoRegister();
+                    }
+                }
             }
         }
-    }
-    public function checkLink($path)
-    {
-        (new DataInfo($path, $this))->addLink();
     }
     public function AddItem($path)
     {

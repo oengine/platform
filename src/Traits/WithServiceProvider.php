@@ -27,6 +27,22 @@ trait WithServiceProvider
         Theme::Load($this->package->basePath('/../themes'));
         Plugin::Load($this->package->basePath('/../plugins'));
         do_action(PLATFORM_SERVICE_PROVIDER_REGISTER, $this);
+
+        if (file_exists($this->package->basePath('/../routes/api.php')))
+            Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_API, ['api', \OEngine\Platform\Middleware\Platform::class]))
+                ->prefix('api')
+                ->group($this->package->basePath('/../routes/api.php'));
+
+        if (file_exists($this->package->basePath('/../routes/web.php')))
+            Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_WEB, ['web', \OEngine\Platform\Middleware\Platform::class]))
+                ->group($this->package->basePath('/../routes/web.php'));
+
+        if (file_exists($this->package->basePath('/../routes/admin.php')))
+            Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_ADMIN, ['web', \OEngine\Platform\Middleware\Authenticate::class, \OEngine\Platform\Middleware\ThemeAdmin::class, \OEngine\Platform\Middleware\Platform::class]))
+                ->prefix(adminUrl())
+                ->group($this->package->basePath('/../routes/admin.php'));
+
+
         $this->packageRegistered();
         return $this;
     }
@@ -53,21 +69,6 @@ trait WithServiceProvider
                 });
             }
         }
-
-        if (file_exists($this->package->basePath('/../routes/api.php')))
-            Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_API, ['api', \OEngine\Platform\Middleware\Platform::class]))
-                ->prefix('api')
-                ->group($this->package->basePath('/../routes/api.php'));
-
-        if (file_exists($this->package->basePath('/../routes/web.php')))
-            Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_WEB, ['web', \OEngine\Platform\Middleware\Platform::class]))
-                ->group($this->package->basePath('/../routes/web.php'));
-
-        if (file_exists($this->package->basePath('/../routes/admin.php')))
-            Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_ADMIN, ['web', \OEngine\Platform\Middleware\AdminPlatform::class, \OEngine\Platform\Middleware\Platform::class]))
-                ->prefix(adminUrl())
-                ->group($this->package->basePath('/../routes/admin.php'));
-
 
         $this->packageBooted();
 

@@ -27,7 +27,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static void update(string $name)
  * @method static void addLink(string $source,string $target, bool $relative = false)
  * @method static mix getLinks()
- * @method static void checkLink(string $path)
  * 
  *
  * @see \OEngine\Platform\Facades\Module

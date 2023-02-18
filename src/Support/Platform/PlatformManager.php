@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use OEngine\Platform\Http\Livewire\Common\Filemanager\Folder;
 use OEngine\LaravelPackage\JsonData;
+use OEngine\Platform\Facades\Module;
+use OEngine\Platform\Facades\Plugin;
+use OEngine\Platform\Facades\Theme;
 
 class PlatformManager
 {
@@ -120,5 +123,11 @@ class PlatformManager
         File::deleteDirectories($path_folder);
         File::delete($file);
         return  $rs;
+    }
+    public function Load($path)
+    {
+        Theme::Load($path . '/themes');
+        Plugin::Load($path . '/plugins');
+        Module::Load($path . '/modules');
     }
 }

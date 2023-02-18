@@ -36,6 +36,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static string getTitle()
  * @method static void setTitle($title)
  * @method static string Layout($default='')
+ * @method static mix ThemeCurrent()
+ * @method static void RegisterTheme()
  * 
  * @see \OEngine\Platform\Facades\Theme
  */
