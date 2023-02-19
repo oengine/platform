@@ -77,7 +77,7 @@ if (!function_exists('theme_layout')) {
      */
     function theme_layout()
     {
-        return apply_filters(PLATFORM_THEME_LAYOUT, 'theme:none');
+        return Theme::Layout(apply_filters(PLATFORM_THEME_LAYOUT, ''));
     }
 }
 if (!function_exists('theme_class')) {

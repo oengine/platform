@@ -78,8 +78,5 @@ class PlatformServiceProvider extends ServiceProvider
             </script>
             ";
         });
-        add_filter(PLATFORM_THEME_LAYOUT, function ($prev) {
-            return Theme::Layout();
-        });
     }
 }
