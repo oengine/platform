@@ -19,7 +19,7 @@
   "autoload": {
     "files": [
       "helpers/constraint.php",
-      "helpers/platform.php"
+      "helpers/function.php"
     ],
     "psr-4": {
       "OEngine\\Platform\\": "src/"

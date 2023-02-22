@@ -6,6 +6,7 @@ use Symfony\Component\Finder\SplFileInfo;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\View;
 use OEngine\Platform\Facades\Module;
 use OEngine\Platform\Facades\Plugin;
 use OEngine\Platform\Facades\Theme;
@@ -269,5 +270,32 @@ if (!function_exists('get_option')) {
 
             return $default;
         }
+    }
+}
+
+if (!function_exists('tview')) {
+     /**
+     * Get the evaluated view contents for the given view.
+     *
+     * @param  string|null  $view
+     * @param  \Illuminate\Contracts\Support\Arrayable|array  $data
+     * @param  array  $mergeData
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
+    function tview($view = null, $data = [], $mergeData = [])
+    {
+        if ($view && $arr = explode('::', $view)) {
+
+            if (count($arr) == 1) {
+                if (View::exists('theme::page.' . $arr[0]))
+                    return view('theme::page.' . $arr[0], $data, $mergeData);
+            } else if (count($arr) == 2) {
+                if (View::exists('theme::page.' . $arr[0] . '.' . $arr[1]))
+                    return view('theme::page.' . $arr[0] . '.' . $arr[1], $data, $mergeData);
+                if (View::exists('theme::page.' . $arr[1]))
+                    return view('theme::page.' . $arr[1], $data, $mergeData);
+            }
+        }
+        return view($view, $data, $mergeData);
     }
 }
