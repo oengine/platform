@@ -12,7 +12,7 @@ class PlatformController extends BaseController
     public function getComponent(Request $request)
     {
         $data = platform_decode($request->get('key'));
-        $dataParams = [];
+        $dataParams = $data;
         $data = apply_filters(PLATFORM_DO_COMPONENT, $dataParams);
         if (!is_array($data) && $data !== $dataParams) {
             $data = ['data' => $data];

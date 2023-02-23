@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string Layout($default='')
  * @method static mix ThemeCurrent()
  * @method static void RegisterTheme()
+ * @method static void setLayoutNone()
  * 
  * @see \OEngine\Platform\Facades\Theme
  */

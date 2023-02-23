@@ -105,9 +105,11 @@ trait WithSystemExtend
         if ($files =  glob($path . '/*', GLOB_ONLYDIR)) {
             foreach ($files as $itemFile) {
                 $item = $this->AddItem($itemFile);
-                if ($this->isRegisterBeforeLoad()) {
-                    if ($item->isActive()) {
+                if ($item->isActive()) {
+                    if ($this->isRegisterBeforeLoad()) {
                         $item->DoRegister();
+                    } else {
+                        $item->loadRoute();
                     }
                 }
             }

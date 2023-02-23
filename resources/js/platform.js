@@ -106,6 +106,7 @@ export class ModulePlatform extends Event {
       });
     });
     self.$loaded = true;
+    self.dispatch('platform::loaded',self);
   }
   uninit() {
     const self = this;

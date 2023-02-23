@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\File;
 use OEngine\LaravelPackage\JsonData;
 
 use Illuminate\Support\Str;
-use OEngine\Platform\Facades\Module;
 use OEngine\Platform\Facades\Platform;
-use OEngine\Platform\Facades\Theme;
 
 class DataInfo extends JsonData
 {
@@ -147,43 +145,40 @@ class DataInfo extends JsonData
     {
         File::deleteDirectory($this->getPath());
     }
-    private $providers;
-    public function DoRegister($namespace = '')
+    public function loadRoute()
     {
-
-        if (File::exists($this->getPath('public/'))) {
-            Module::addLink($this->getPath('public/'), public_path($this->base_type . 's/' . $this->name));
-        }
-        Platform::SwitchTo($namespace);
+        RouteEx::Load($this->getPath('routes'));
+    }
+    public function Autoload()
+    {
         if ($this->checkComposer() && !$this->checkDump()) {
             $this->Dump();
         }
         if ($this->checkDump()) {
             include_once $this->getPath('vendor/autoload.php');
+            return true;
+        }
+        return false;
+    }
+    private $providers;
+    public function DoRegister($create = false)
+    {
+
+        if ($this->Autoload()) {
             $composer = $this->getJsonFromFile($this->getPath('composer.json'));
             $providers = self::getValueByKey($composer, 'extra.laravel.providers', []);
-            $dataInfo = $this;
-            $this->providers =  collect($providers)->map(function ($item) use ($dataInfo) {
-                $provider = app()->register($item, true);
-                if (method_exists($provider, 'setDataInfo')) {
-                    $provider->setDataInfo($dataInfo);
-                }
-                return $provider;
+            $this->providers =  collect($providers)->map(function ($item) {
+                return app()->register($item);
             });
         }
-        Platform::SwitchTo('');
     }
     public function DoBoot()
     {
-        if (File::exists($this->getPath('public/js/app.js')))
-            Theme::addScript(PLATFORM_BODY_AFTER, url($this->base_type . 's/' . $this->name . '/js/app.js'));
-        if (File::exists($this->getPath('public/css/app.css')))
-            Theme::addStyle(PLATFORM_HEAD_AFTER, url($this->base_type . 's/' . $this->name . '/css/app.css'));
-        if (isset($this->providers) && $this->providers != null && is_array($this->providers) && count($this->providers) > 0) {
-            foreach ($this->providers as $item) {
-                if (method_exists($item, 'boot'))
-                    $item->boot();
-            }
-        }
+        // if (isset($this->providers) && $this->providers != null && is_array($this->providers) && count($this->providers) > 0) {
+        //     foreach ($this->providers as $item) {
+        //         if (method_exists($item, 'boot'))
+        //             $item->boot();
+        //     }
+        // }
     }
 }

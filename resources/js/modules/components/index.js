@@ -27,6 +27,7 @@ export class PlatformComponent {
           if (!data.error_code) {
             let el = self.manager.htmlToElement(data.html);
             toEl.appendChild(el);
+            this.manager.dispatch("platform::trigger-component", el);
             self.triggerEventComponent(el);
             this.manager.dispatch("platform::component", el);
           } else {

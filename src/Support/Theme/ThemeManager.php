@@ -83,20 +83,8 @@ class ThemeManager
         if ($parent = $theme_data['parent']) {
             $this->findAndRegister($parent, $parentId);
         }
-        $theme_data->DoRegister('theme');
+        $theme_data->DoRegister();
         return $theme_data;
-    }
-    public function bootThemeWithActive($theme)
-    {
-        if ($themes = $this->data_themes[$theme]) {
-            if (count($themes) > 0) {
-                foreach ($themes as $item) {
-                    $item->DoBoot();
-                }
-                return $themes[0];
-            }
-        }
-        return null;
     }
     public function RegisterTheme()
     {
@@ -108,12 +96,12 @@ class ThemeManager
     {
         if (!isset($this->data_active) || !$this->data_active) {
             if (platform_route_is_admin()) {
-                $this->data_active = $this->bootThemeWithActive(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, get_option(PLATFORM_THEME_ADMIN, 'oengine-admin'), 1));
+                $this->data_active = $this->findAndRegister(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, get_option(PLATFORM_THEME_ADMIN, 'oengine-admin'), 1));
             } else {
-                $this->data_active = $this->bootThemeWithActive(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, get_option(PLATFORM_THEME_WEB, 'oengine-none'), 0));
+                $this->data_active = $this->findAndRegister(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, get_option(PLATFORM_THEME_WEB, 'oengine-none'), 0));
             }
             if ($this->data_active == null) {
-                $this->data_active = $this->bootThemeWithActive('none');
+                $this->data_active = $this->findAndRegister('none');
             }
         }
         return $this->data_active;

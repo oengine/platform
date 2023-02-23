@@ -4,6 +4,7 @@ namespace OEngine\Platform;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Route;
 use OEngine\LaravelPackage\ServicePackage;
 use OEngine\Platform\Directives\PlatformBladeDirectives;
 use OEngine\Platform\Facades\Module;
@@ -43,15 +44,11 @@ class PlatformServiceProvider extends ServiceProvider
 
     public function packageBooted()
     {
-        Module::BootApp();
-        Plugin::BootApp();
-        Theme::BootApp();
     }
     public function bootingPackage()
     {
         Module::LoadApp();
         Theme::LoadApp();
-        Theme::RegisterTheme();
         Plugin::LoadApp();
     }
 
@@ -67,13 +64,19 @@ class PlatformServiceProvider extends ServiceProvider
         add_action(PLATFORM_BODY_AFTER, function () {
             echo Theme::loadAsset(PLATFORM_BODY_AFTER);
             echo "
-            <script type='text/javascript'>
+            <script type='text/javascript' id='ModulePlatformjs____1234567890'>
             setTimeout(function(){
-                ModulePlatform.\$debug=" . (env('MODULE_PLATFORM_DEBUG', false) ? 'true' : 'false') . ";
-                ModulePlatform.\$config=" . json_encode(apply_filters(PLATFORM_CONFIG_JS, ['url' => url(''), 'platform_url' => route('__platform__'), 'csrf_token' => csrf_token()])) . ";
+                if(window.ModulePlatform){
+                    window.ModulePlatform.\$debug=" . (env('MODULE_PLATFORM_DEBUG', false) ? 'true' : 'false') . ";
+                    window.ModulePlatform.\$config=" . json_encode(apply_filters(PLATFORM_CONFIG_JS, ['url' => url(''), 'platform_url' => route('__platform__'), 'csrf_token' => csrf_token()])) . ";
+                }
+                document.getElementById('ModulePlatformjs____1234567890')?.remove();
             },0)
             </script>
             ";
+        });
+        Route::matched(function () {
+            Theme::ThemeCurrent();
         });
     }
 }

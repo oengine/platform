@@ -568,6 +568,7 @@ return [
         'middleware' => ['path' => 'src/Http/Middleware', 'namespace' => 'Http\\Middleware', 'generate' => true, 'only' => ['module']],
         'action' => ['path' => 'src/Http/Action', 'namespace' => 'Http\\Action', 'generate' => true, 'only' => ['module']],
         'request' => ['path' => 'src/Http/Requests', 'namespace' => 'Http\\Requests', 'generate' => true, 'only' => ['module']],
+        'livewire' => ['path' => 'src/Http/Livewire', 'namespace' => 'Http\\Livewire', 'generate' => true, 'only' => ['module']],
         'provider' => ['path' => 'src/Providers', 'namespace' => 'Providers', 'generate' => true, 'only' => ['module']],
         'assets' => ['path' => 'resources/assets', 'generate' => true],
         'lang' => ['path' => 'resources/lang', 'generate' => true],

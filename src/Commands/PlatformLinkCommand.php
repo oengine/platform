@@ -52,9 +52,7 @@ class PlatformLinkCommand extends Command
         }
         $force = $this->option('force') || true;
         $relative = $this->option('relative') || false;
-        Theme::findAndActive('oengine-none', true);
-        Theme::findAndActive(get_option(PLATFORM_THEME_ADMIN), true);
-        Theme::findAndActive(get_option(PLATFORM_THEME_WEB), true);
+        Theme::RegisterTheme();
         foreach (Module::getLinks() as  [
             'source' => $source,
             'target' => $target

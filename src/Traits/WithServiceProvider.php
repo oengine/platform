@@ -2,11 +2,14 @@
 
 namespace OEngine\Platform\Traits;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use OEngine\LaravelPackage\WithServiceProvider as WithServiceProviderBase;
+use OEngine\Platform\Facades\Module;
 use OEngine\Platform\Facades\Platform;
 use OEngine\Platform\Facades\Plugin;
 use OEngine\Platform\Facades\Theme;
+use OEngine\Platform\RouteEx;
 
 trait WithServiceProvider
 {
@@ -14,33 +17,28 @@ trait WithServiceProvider
         register as protected registerBase;
         boot as protected bootBase;
     }
+    public $base_type = '';
     public function configurePackaged()
     {
-        if ($name = Platform::Current()) {
-            $this->package->name($name);
-        }
     }
+
     public function register()
     {
         $this->ExtendPackage();
         $this->registerBase();
+        foreach (['module', 'theme', 'plugin'] as $baseType) {
+            if (file_exists($this->package->basePath('/../' . $baseType . '.json'))) {
+                $this->base_type = $baseType;
+                break;
+            }
+        }
+
+        if (file_exists($this->package->basePath('/../public'))) {
+            Module::addLink($this->package->basePath('/../public'), public_path($this->base_type . 's/' . $this->package->name));
+        }
         Theme::Load($this->package->basePath('/../themes'));
         Plugin::Load($this->package->basePath('/../plugins'));
-
-        if (file_exists($this->package->basePath('/../routes/api.php')))
-            Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_API, ['api', \OEngine\Platform\Middleware\Platform::class]))
-                ->prefix('api')
-                ->group($this->package->basePath('/../routes/api.php'));
-
-        if (file_exists($this->package->basePath('/../routes/web.php')))
-            Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_WEB, ['web', \OEngine\Platform\Middleware\Platform::class]))
-                ->group($this->package->basePath('/../routes/web.php'));
-
-        if (file_exists($this->package->basePath('/../routes/admin.php')))
-            Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_ADMIN, ['web', \OEngine\Platform\Middleware\Authenticate::class, \OEngine\Platform\Middleware\ThemeAdmin::class, \OEngine\Platform\Middleware\Platform::class]))
-                ->prefix(adminUrl())
-                ->group($this->package->basePath('/../routes/admin.php'));
-
+        RouteEx::Load($this->package->basePath('/../routes/'));
 
         $this->packageRegistered();
         return $this;
@@ -49,6 +47,15 @@ trait WithServiceProvider
 
     public function boot()
     {
+        if ($this->base_type) {
+            if (file_exists($this->package->basePath('/../public/js/app.js')))
+                Theme::addScript(PLATFORM_BODY_AFTER, url($this->base_type . 's/' . $this->package->name . '/js/app.js'));
+            if (file_exists($this->package->basePath('/../public/css/app.css')))
+                Theme::addStyle(PLATFORM_HEAD_AFTER, url($this->base_type . 's/' . $this->package->name . '/css/app.css'));
+        }
+        if ($this->base_type == 'theme') {
+            $this->package->name('theme');
+        }
         $this->bootBase();
         if ($this->app->runningInConsole()) {
             if ($this->package->runsMigrations) {
