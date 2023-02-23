@@ -26,7 +26,6 @@ trait WithServiceProvider
         $this->registerBase();
         Theme::Load($this->package->basePath('/../themes'));
         Plugin::Load($this->package->basePath('/../plugins'));
-        do_action(PLATFORM_SERVICE_PROVIDER_REGISTER, $this);
 
         if (file_exists($this->package->basePath('/../routes/api.php')))
             Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_API, ['api', \OEngine\Platform\Middleware\Platform::class]))
@@ -51,7 +50,6 @@ trait WithServiceProvider
     public function boot()
     {
         $this->bootBase();
-        do_action(PLATFORM_SERVICE_PROVIDER_BOOT, $this);
         if ($this->app->runningInConsole()) {
             if ($this->package->runsMigrations) {
                 AllFile($this->package->basePath("/../database/migrations/"), function ($file) {

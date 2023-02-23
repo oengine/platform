@@ -2,11 +2,8 @@
 
 namespace OEngine\Platform;
 
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Route;
 use OEngine\LaravelPackage\ServicePackage;
 use OEngine\Platform\Directives\PlatformBladeDirectives;
 use OEngine\Platform\Facades\Module;

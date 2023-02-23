@@ -273,16 +273,16 @@ if (!function_exists('get_option')) {
     }
 }
 
-if (!function_exists('tview')) {
+if (!function_exists('viewt')) {
      /**
-     * Get the evaluated view contents for the given view.
-     *
+     * Get the evaluated view contents for the given view and Support for theme
+     * 
      * @param  string|null  $view
      * @param  \Illuminate\Contracts\Support\Arrayable|array  $data
      * @param  array  $mergeData
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    function tview($view = null, $data = [], $mergeData = [])
+    function viewt($view = null, $data = [], $mergeData = [])
     {
         if ($view && $arr = explode('::', $view)) {
 
