@@ -2,27 +2,15 @@
 
 namespace OEngine\Platform\Support\Platform;
 
-use Illuminate\Log\Logger;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
-use OEngine\Platform\Http\Livewire\Common\Filemanager\Folder;
-use OEngine\LaravelPackage\JsonData;
 use OEngine\Platform\Facades\Module;
 use OEngine\Platform\Facades\Plugin;
 use OEngine\Platform\Facades\Theme;
 
 class PlatformManager
 {
-    private $platformCurrent = '';
     private $platformFileVersion;
-    public function Current()
-    {
-        return $this->platformCurrent;
-    }
-    public function SwitchTo($curent)
-    {
-        return $this->platformCurrent = $curent;
-    }
     public function FileVersion()
     {
         return $this->platformFileVersion ?? ($this->platformFileVersion = json_decode(file_get_contents(config('platform.updator.url')), true));

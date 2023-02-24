@@ -220,8 +220,12 @@ if (!function_exists('adminUrl')) {
     }
 }
 if (!function_exists('page_title')) {
-    function page_title()
+    function page_title($title = '')
     {
+        if ($title) {
+            Theme::setTitle($title);
+            return;
+        }
         return  apply_filters(PLATFORM_URL_ADMIN, Theme::getTitle());
     }
 }
@@ -274,7 +278,7 @@ if (!function_exists('get_option')) {
 }
 
 if (!function_exists('viewt')) {
-     /**
+    /**
      * Get the evaluated view contents for the given view and Support for theme
      * 
      * @param  string|null  $view
