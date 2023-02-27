@@ -53,7 +53,6 @@ class DataInfo extends JsonData
     {
         return $this->public . ($_path ? ('/' . $_path) : '');
     }
-
     public function getFiles()
     {
         return $this['files'] ?? [];
