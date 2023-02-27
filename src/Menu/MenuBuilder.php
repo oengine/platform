@@ -44,9 +44,9 @@ class MenuBuilder extends HtmlBuilder
         $this->targetId = $targetId;
         return $this;
     }
-    public function isSub()
+    public function checkSub()
     {
-        return $this->sub;
+        return isset($this->sub) && $this->sub;
     }
     public function getItems()
     {
@@ -149,6 +149,7 @@ class MenuBuilder extends HtmlBuilder
     }
     public function beforeRender(): self
     {
+        $this->genId('menu-');
         foreach ($this->items as $item) {
             $item->beforeRender();
         }
@@ -157,7 +158,7 @@ class MenuBuilder extends HtmlBuilder
     }
     protected function render()
     {
-        if (!$this->isSub())
+        if (!$this->checkSub())
             $this->beforeRender();
         foreach ($this->warps as $item) {
             $attribute = '';

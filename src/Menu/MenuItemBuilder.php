@@ -98,8 +98,13 @@ class MenuItemBuilder extends HtmlBuilder
     {
         return $this->subMenu;
     }
+    public function getParent(): MenuBuilder
+    {
+        return $this->parent;
+    }
     public function beforeRender()
     {
+        $this->genId('menu-item-');
         if ($this->getValueType() === self::ITEM_SUB) {
             $callback = $this->getValueCallback();
             if ($callback && is_callable($callback)) {
