@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
+use OEngine\Platform\Facades\Menu;
 use OEngine\Platform\Facades\Module;
 use OEngine\Platform\Facades\Plugin;
 use OEngine\Platform\Facades\Theme;
@@ -301,5 +302,12 @@ if (!function_exists('viewt')) {
             }
         }
         return view($view, $data, $mergeData);
+    }
+}
+
+if (!function_exists('menu_render')) {
+    function menu_render($_position = '')
+    {
+        return Menu::render($_position);
     }
 }

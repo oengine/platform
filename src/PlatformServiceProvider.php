@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use OEngine\LaravelPackage\ServicePackage;
 use OEngine\Platform\Directives\PlatformBladeDirectives;
+use OEngine\Platform\Facades\Menu;
 use OEngine\Platform\Facades\Module;
 use OEngine\Platform\Facades\Plugin;
 use OEngine\Platform\Facades\Theme;
@@ -76,6 +77,7 @@ class PlatformServiceProvider extends ServiceProvider
             ";
         });
         Route::matched(function () {
+            Menu::DoRegister();
             Theme::ThemeCurrent();
         });
     }
