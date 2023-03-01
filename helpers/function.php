@@ -305,6 +305,33 @@ if (!function_exists('viewt')) {
     }
 }
 
+if (!function_exists('has_viewt')) {
+    /**
+     * Get the evaluated view contents for the given view and Support for theme
+     * 
+     * @param  string|null  $view
+     * @param  \Illuminate\Contracts\Support\Arrayable|array  $data
+     * @param  array  $mergeData
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
+    function has_viewt($view = null)
+    {
+        if ($view && $arr = explode('::', $view)) {
+
+            if (count($arr) == 1) {
+                if (View::exists('theme::page.' . $arr[0]))
+                    return true;
+            } else if (count($arr) == 2) {
+                if (View::exists('theme::page.' . $arr[0] . '.' . $arr[1]))
+                    return true;
+                if (View::exists('theme::page.' . $arr[1]))
+                    return true;
+            }
+        }
+        return View::exists($view);
+    }
+}
+
 if (!function_exists('menu_render')) {
     function menu_render($_position = '')
     {

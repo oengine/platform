@@ -24,4 +24,8 @@ abstract class HtmlBuilder implements Htmlable
         $this->render();
         return ob_get_clean();
     }
+    public function __toString()
+    {
+        return $this->toHtml();
+    }
 }
