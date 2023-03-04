@@ -24,6 +24,7 @@ class DataInfo extends JsonData
     }
     public function loadAll($path)
     {
+        if ($this->isVendor()) return;
         Platform::Load($path);
     }
     public function ReLoad()
@@ -159,10 +160,9 @@ class DataInfo extends JsonData
         }
         return false;
     }
-    private $providers;
-    public function DoRegister($create = false)
+    public function DoRegister()
     {
-
+        if ($this->isVendor()) return;
         if ($this->Autoload()) {
             $composer = $this->getJsonFromFile($this->getPath('composer.json'));
             $providers = self::getValueByKey($composer, 'extra.laravel.providers', []);
@@ -173,11 +173,5 @@ class DataInfo extends JsonData
     }
     public function DoBoot()
     {
-        // if (isset($this->providers) && $this->providers != null && is_array($this->providers) && count($this->providers) > 0) {
-        //     foreach ($this->providers as $item) {
-        //         if (method_exists($item, 'boot'))
-        //             $item->boot();
-        //     }
-        // }
     }
 }

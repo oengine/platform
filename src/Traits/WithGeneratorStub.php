@@ -2,6 +2,7 @@
 
 namespace OEngine\Platform\Traits;
 
+use Carbon\Carbon;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Log;
@@ -86,7 +87,7 @@ trait WithGeneratorStub
     public function getBaseName()
     {
         if (!$this->_base_name)
-            $this->_base_name = Str::studly($this->argument($this->getBaseTypeName()));
+            $this->_base_name = Str::studly($this->option('base'));
         if (!$this->_base_name)
             $this->_base_name = $this->getSystemBase()->getUsed();
         return $this->_base_name;
@@ -197,7 +198,9 @@ trait WithGeneratorStub
     }
     public function GeneratorFileByStub($stub, $name = '')
     {
+
         $template = $this->getTemplates()[$stub];
+        // return true;
         if (isset($template) && count($template) > 0) {
             $path = $this->getFolders()[isset($template['path']) ? $template['path'] : 'base'];
             $name_file = $name != '' ? $name : $template['name'];
@@ -222,10 +225,18 @@ trait WithGeneratorStub
             }
             $name_file = $this->getContentWithReplace($name_file, $replacements);
 
-            $path = $this->getPath($path['path']) . '/' . str_replace('\\', '/', $name_file);
-            $content = $this->getContentWithStub($stub . '.stub');
+            $dataInfo = $this->getDataInfo();
+            if ($dataInfo)
+                $path = $dataInfo->getPath($path['path']) . '/' . str_replace('\\', '/', $name_file);
+            else
+                $path = $this->getPath($path['path']) . '/' . str_replace('\\', '/', $name_file);
+            if (isset($template['stub']) && $template['stub']) {
+                $content = $this->getContentWithStub($template['stub'] . '.stub');
+            } else {
+                $content = $this->getContentWithStub($stub . '.stub');
+            }
             $content = $this->getContentWithReplace($content, $replacements, isset($template['doblue']) && $template['doblue']);
-            Log::info($path);
+            $this->components->info($path);
             if (!$this->filesystem->isDirectory($dir = dirname($path))) {
                 $this->filesystem->makeDirectory($dir, 0775, true);
             }
@@ -383,5 +394,14 @@ trait WithGeneratorStub
         return Str::uuid() . rand(10000, 10000000);
     }
 
+    /**
+     * Get replacement for $FILE_MIGRATION$.
+     *
+     * @return string
+     */
+    protected function getFileMigrationReplacement()
+    {
+        return Carbon::now()->format('Y_m_d_His') . '_' . Str::lower($this->getFileName());
+    }
     //------------------END  : Replacement------------------------------
 }

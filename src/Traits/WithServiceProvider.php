@@ -2,11 +2,9 @@
 
 namespace OEngine\Platform\Traits;
 
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Route;
+use OEngine\LaravelPackage\JsonData;
 use OEngine\LaravelPackage\WithServiceProvider as WithServiceProviderBase;
 use OEngine\Platform\Facades\Module;
-use OEngine\Platform\Facades\Platform;
 use OEngine\Platform\Facades\Plugin;
 use OEngine\Platform\Facades\Theme;
 use OEngine\Platform\RouteEx;
@@ -29,6 +27,10 @@ trait WithServiceProvider
         foreach (['module', 'theme', 'plugin'] as $baseType) {
             if (file_exists($this->package->basePath('/../' . $baseType . '.json'))) {
                 $this->base_type = $baseType;
+                $info = JsonData::getJsonFromFile($this->package->basePath('/../' . $baseType . '.json'));
+                if (!(isset($info['name']) && platform_by($this->base_type)->has($info['name']))) {
+                    platform_by($this->base_type)->AddItem($this->package->basePath('/../'));
+                }
                 break;
             }
         }

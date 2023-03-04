@@ -20,8 +20,9 @@ class PlatformMakeFileCommand extends Command
     protected function getOptions()
     {
         return [
+            ['base', 'b', InputOption::VALUE_OPTIONAL, 'Make by type', 'admin'],
             ['type', 't', InputOption::VALUE_OPTIONAL, 'Make by type', 'module'],
-            ['template', 'tem', InputOption::VALUE_OPTIONAL, 'template', 'controller'],
+            ['temp', 'te', InputOption::VALUE_OPTIONAL, 'template', 'controller'],
             ['list', 'l', InputOption::VALUE_OPTIONAL, 'Show template list', '']
         ];
     }
@@ -31,20 +32,31 @@ class PlatformMakeFileCommand extends Command
             ['name', InputArgument::IS_ARRAY, 'The names will be created.'],
         ];
     }
+    private $file_name;
+    public function getFileName()
+    {
+        return $this->file_name;
+    }
     /**
      * Execute the console command.
      */
     public function handle(): int
     {
+        // foreach (Module::getData() as $key => $item) {
+        //     $this->components->info($key);
+        //     $this->components->info($item->getPath());
+        // }
+        // return 0;
         $type = $this->option('type');
-        $template = $this->option('template');
-        $this->components->info('Platform make by ' . $type);
+        $template = $this->option('temp');
+        $this->components->info('Platform make by ' . $type . ':' . $template . '    ');
         $this->bootWithGeneratorStub();
         $names = $this->argument('name');
         $success = true;
 
         foreach ($names as $name) {
-            $code = $this->GeneratorFileByStub($template,$name);
+            $this->file_name = $name;
+            $code = $this->GeneratorFileByStub($template);
             $this->components->info('module ' . $name . ' : ' .  $code);
             if ($code === E_ERROR) {
                 $success = false;

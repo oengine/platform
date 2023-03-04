@@ -83,25 +83,25 @@ return [
         'files' => [
             'common' => [
                 'index-html',
-                'scaffold/config',
-                'views/index',
-                'assets/js/app',
-                'assets/sass/app',
+                'config',
+                'view',
+                'app-js',
+                'app-sass',
                 'webpack',
                 'package',
                 'gitignore'
             ],
             'module' => [
-                'routes/web',
-                'routes/api',
-                'routes/admin',
+                'route',
+                'api',
+                'admin',
                 'composer',
                 'provider-base',
                 'json'
             ],
             'theme' => [
-                'views/layout',
-                'views/layout-none',
+                'layout',
+                'layout-none',
                 'composer',
                 'provider-base',
                 'json-theme'
@@ -117,48 +117,58 @@ return [
                 'path' => 'public',
                 'name' => 'index.html'
             ],
-            'scaffold/config' => [
+            'config' => [
+                'stub'=>'scaffold/config',
                 'path' => 'config',
                 'name' => '$LOWER_NAME$.php',
                 'replacements' => [
                     'LOWER_NAME'
                 ]
             ],
-            'views/index' => [
+            'view' => [
+                'stub'=>'views/index',
                 'path' => 'views',
                 'name' => 'index.blade.php'
             ],
-            'views/layout' => [
+            'layout' => [
+                'stub'=>'views/layout',
                 'path' => 'views',
                 'name' => 'layout.blade.php'
             ],
-            'views/layout-none' => [
+            'layout-none' => [
+                'stub'=>'views/layout-none',
                 'path' => 'views',
                 'name' => 'none.blade.php'
             ],
-            'views/layout-name' => [
+            'layout-name' => [
+                'stub'=>'views/layout-name',
                 'path' => 'views',
                 'name' => '$LOWER_NAME$.blade.php'
             ],
-            'assets/js/app' => [
+            'app-js' => [
+                'stub'=>'assets/js/app',
                 'path' => 'assets',
                 'name' => 'js/app.js'
             ],
-            'assets/sass/app' => [
+            'app-sass' => [
+                'stub'=>'assets/sass/app',
                 'path' => 'assets',
                 'name' => 'sass/app.scss'
             ],
-            'routes/web' => [
+            'route' => [
+                'stub'=>'routes/web',
                 'path' => 'routes',
                 'name' => 'web.php',
                 'replacements' => ['LOWER_NAME', 'STUDLY_NAME']
             ],
-            'routes/api' =>  [
+            'api' =>  [
+                'stub'=>'routes/api',
                 'path' => 'routes',
                 'name' => 'api.php',
                 'replacements' => ['LOWER_NAME']
             ],
-            'routes/admin' =>  [
+            'admin' =>  [
+                'stub'=>'routes/admin',
                 'path' => 'routes',
                 'name' => 'admin.php',
                 'replacements' => ['LOWER_NAME']
@@ -431,16 +441,6 @@ return [
                     'LOWER_NAME',
                 ]
             ],
-            'scaffold/provider' => [
-                'path' => 'provider',
-                'file_prex' => 'ServiceProvider',
-                'name' => '$CLASS_FILE$.php',
-                'replacements' => [
-                    'CLASS',
-                    'NAMESPACE',
-                    'LOWER_NAME',
-                ]
-            ],
             'route-provider' => [
                 'path' => 'provider',
                 'file_prex' => 'ServiceProvider',
@@ -505,7 +505,8 @@ return [
                     'LOWER_NAME',
                 ]
             ],
-            'migration/create' => [
+            'migration-create' => [
+                'stub'=>'migration/create',
                 'path' => 'migration',
                 'name' => '$FILE_MIGRATION$.php',
                 'replacements' => [
@@ -514,7 +515,8 @@ return [
                     'FIELDS'
                 ]
             ],
-            'migration/add' => [
+            'migration-add' => [
+                'stub'=>'migration/add',
                 'path' => 'migration',
                 'name' => '$FILE_MIGRATION$.php',
                 'replacements' => [
@@ -524,7 +526,8 @@ return [
                     'FIELDS_DOWN'
                 ]
             ],
-            'migration/delete' => [
+            'migration-delete' => [
+                'stub'=>'migration/delete',
                 'path' => 'migration',
                 'name' => '$FILE_MIGRATION$.php',
                 'replacements' => [
@@ -534,7 +537,8 @@ return [
                     'FIELDS_DOWN'
                 ]
             ],
-            'migration/drop' => [
+            'migration-drop' => [
+                'stub'=>'migration/drop',
                 'path' => 'migration',
                 'name' => '$FILE_MIGRATION$.php',
                 'replacements' => [
@@ -544,9 +548,10 @@ return [
                     'FIELDS_DOWN'
                 ]
             ],
-            'migration/plain' => [
+            'migration' => [
+                'stub'=>'migration/plain',
                 'path' => 'migration',
-                'name' => '$CLASS_FILE$.php',
+                'name' => '$FILE_MIGRATION$.php',
                 'replacements' => [
                     'FILE_MIGRATION',
                 ]
