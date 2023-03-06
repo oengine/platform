@@ -38,6 +38,7 @@ trait WithServiceProvider
         if (file_exists($this->package->basePath('/../public'))) {
             Module::addLink($this->package->basePath('/../public'), public_path($this->base_type . 's/' . $this->package->name));
         }
+        
         Theme::Load($this->package->basePath('/../themes'));
         Plugin::Load($this->package->basePath('/../plugins'));
         RouteEx::Load($this->package->basePath('/../routes/'));

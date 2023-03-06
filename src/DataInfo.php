@@ -24,7 +24,7 @@ class DataInfo extends JsonData
     }
     public function loadAll($path)
     {
-        if ($this->isVendor()) return;
+        // if ($this->isVendor()) return;
         Platform::Load($path);
     }
     public function ReLoad()
@@ -162,7 +162,7 @@ class DataInfo extends JsonData
     }
     public function DoRegister()
     {
-        if ($this->isVendor()) return;
+       // if ($this->isVendor()) return;
         if ($this->Autoload()) {
             $composer = $this->getJsonFromFile($this->getPath('composer.json'));
             $providers = self::getValueByKey($composer, 'extra.laravel.providers', []);

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use OEngine\Platform\Facades\Module;
 use OEngine\Platform\Facades\Plugin;
 use OEngine\Platform\Facades\Theme;
+use OEngine\Platform\RouteEx;
 
 class PlatformManager
 {
@@ -117,5 +118,6 @@ class PlatformManager
         Theme::Load($path . '/themes');
         Plugin::Load($path . '/plugins');
         Module::Load($path . '/modules');
+        //RouteEx::Load($path . '/routes/');
     }
 }
