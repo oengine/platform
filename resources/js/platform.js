@@ -32,7 +32,13 @@ export class ModulePlatform extends Event {
       },
     });
   }
-
+  appendHtmlToBody(html) {
+    const elHtml = this.htmlToElement(html);
+    if (document.body) {
+      document.body.appendChild(elHtml);
+    }
+    return elHtml;
+  }
   htmlToElement(html) {
     var template = document.createElement("template");
     // html = html.trim(); // Never return a text node of whitespace as the result
@@ -44,10 +50,17 @@ export class ModulePlatform extends Event {
     template.innerHTML = html;
     return template.content.childNodes;
   }
-  addError(error, type = "platform", meta = {}) {
-    this.dispatch("platform::error", {
-      error,
+  addError(error, component = "platform", meta = {}) {
+    this.addMessage(error, "error", component, meta);
+  }
+  addInfo(message, component = "platform", meta = {}) {
+    this.addMessage(message, "info", component, meta);
+  }
+  addMessage(message, type, component = "platform", meta = {}) {
+    this.dispatch("platform::message", {
+      message,
       type,
+      component,
       meta,
     });
   }
@@ -106,7 +119,7 @@ export class ModulePlatform extends Event {
       });
     });
     self.$loaded = true;
-    self.dispatch('platform::loaded',self);
+    self.dispatch("platform::loaded", self);
   }
   uninit() {
     const self = this;
@@ -132,9 +145,9 @@ export class ModulePlatform extends Event {
     window.addEventListener("DOMContentLoaded", function () {
       self.init().loading();
     });
-    self.on("platform::error", (error) => {
+    self.on("platform::message", (data) => {
       if (self.$debug == true) {
-        console.log(error);
+        console.log(data);
       }
     });
   }
